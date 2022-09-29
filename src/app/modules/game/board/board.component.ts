@@ -4,13 +4,13 @@ import { GameService } from 'src/app/core/services/game.service';
 import { SudokuField } from 'src/app/shared/models/sudoku.model';
 
 @Component({
-  selector: 'app-puzzle',
-  templateUrl: './puzzle.component.html',
-  styleUrls: ['./puzzle.component.scss'],
+  selector: 'app-board',
+  templateUrl: './board.component.html',
+  styleUrls: ['./board.component.scss'],
 })
-export class PuzzleComponent implements OnInit {
+export class BoardComponent implements OnInit {
   sudokuData$ = combineLatest([this.gameService.puzzle$.pipe(startWith(undefined)), this.gameService.activeCell$.pipe(startWith(undefined))]).pipe(
-    map(([puzzle, activeCell]) => ({ puzzle, activeCell })),
+    map(([board, activeCell]) => ({ board, activeCell })),
   );
 
   constructor(public gameService: GameService) {}

@@ -1,5 +1,5 @@
 <ng-container *ngIf="sudokuData$ | async as gameData">
-  <ng-container *ngFor="let row of gameData.puzzle; index as rowIndex">
+  <ng-container *ngFor="let row of gameData.board; index as rowIndex">
     <div
       class="cell"
       *ngFor="let field of row; index as colIndex"
