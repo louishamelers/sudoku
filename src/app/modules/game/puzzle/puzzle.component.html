@@ -1,0 +1,20 @@
+<ng-container *ngIf="sudokuData$ | async as gameData">
+  <ng-container *ngFor="let row of gameData.puzzle; index as rowIndex">
+    <div
+      class="cell"
+      *ngFor="let field of row; index as colIndex"
+      [class.top]="rowIndex % 3 === 0"
+      [class.bottom]="rowIndex % 3 === 2"
+      [class.left]="colIndex % 3 === 0"
+      [class.right]="colIndex % 3 === 2"
+      [class.readonly]="field.readonly"
+      [class.highlight-row]="rowIndex === gameData.activeCell?.row"
+      [class.highlight-col]="colIndex === gameData.activeCell?.col"
+      [class.highlight-same]="gameData.activeCell?.value && gameData.activeCell?.value === field?.value"
+      [class.active]="gameData.activeCell?.col === colIndex && gameData.activeCell?.row === rowIndex"
+      (click)="onFieldClick(field)"
+    >
+      <div class="value">{{ field.value }}</div>
+    </div>
+  </ng-container>
+</ng-container>

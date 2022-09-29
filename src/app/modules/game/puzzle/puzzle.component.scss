@@ -1,0 +1,81 @@
+$border-color: #3f51b5;
+$active-color: #b7c4ff;
+$highlight-row-color: #e8e8e8;
+$highlight-col-color: #e8e8e8;
+$highlight-same-color: #cacaca;
+$text-color: #3f51b5;
+$text-color--readonly: #000;
+$background-color: white;
+
+:host {
+  background: $border-color;
+  border: 1px solid $border-color;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  color: $text-color;
+}
+
+.cell {
+  background: $background-color;
+  position: relative;
+  cursor: pointer;
+
+  &.readonly {
+    color: $text-color--readonly;
+  }
+
+  &.highlight-row {
+    background: $highlight-row-color;
+  }
+
+  &.highlight-col {
+    background: $highlight-col-color;
+  }
+
+  &.highlight-same {
+    background: $highlight-same-color;
+  }
+
+  &.active {
+    background: $active-color;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    padding-top: 100%;
+    width: 100%;
+  }
+
+  &.top {
+    border-top: 1px solid $border-color;
+  }
+
+  &.bottom {
+    border-bottom: 1px solid $border-color;
+  }
+
+  &.left {
+    border-left: 1px solid $border-color;
+  }
+
+  &.right {
+    border-right: 1px solid $border-color;
+  }
+
+  .value {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
