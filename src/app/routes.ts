@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { BoardComponent } from './modules/game/board/board.component';
+import { GameComponent } from './modules/game/game.component';
 
 export const ROUTES: Routes = [
   {
@@ -9,6 +9,6 @@ export const ROUTES: Routes = [
   },
   {
     path: 'game',
-    component: BoardComponent,
+    component: GameComponent,
   },
 ];

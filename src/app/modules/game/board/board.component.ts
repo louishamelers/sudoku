@@ -13,7 +13,7 @@ export class BoardComponent implements OnInit {
     map(([board, activeCell]) => ({ board, activeCell })),
   );
 
-  constructor(public gameService: GameService) {}
+  constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
     this.gameService.startNewGame('expert');
