@@ -12,7 +12,7 @@
       [class.highlight-col]="colIndex === gameData.activeFieldCell?.col"
       [class.highlight-same]="gameData.activeFieldCell?.value && gameData.activeFieldCell?.value === field?.value"
       [class.active]="gameData.activeFieldCell?.col === colIndex && gameData.activeFieldCell?.row === rowIndex"
-      (click)="onFieldClick({row: rowIndex, col: colIndex})"
+      (click)="onFieldClick({ row: rowIndex, col: colIndex })"
     >
       <div class="value">{{ field.value }}</div>
     </div>

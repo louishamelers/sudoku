@@ -1,6 +1,6 @@
-import { Difficulty as ExtDifficulty } from "sudoku-gen/dist/types/difficulty.type";
+import { Difficulty as ExtDifficulty } from 'sudoku-gen/dist/types/difficulty.type';
 
-export declare type Difficulty = ExtDifficulty
+export declare type Difficulty = ExtDifficulty;
 
 export interface GameData {
   difficulty: Difficulty | null;
@@ -21,4 +21,4 @@ export interface Cell {
   row: number;
 }
 
-export interface FieldCell extends Field, Cell { }
+export interface FieldCell extends Field, Cell {}

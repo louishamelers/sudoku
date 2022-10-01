@@ -8,9 +8,7 @@ import { GameService } from 'src/app/core/services/game.service';
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
-
-  constructor(private gameService: GameService, private store: Store) {
-  }
+  constructor(private gameService: GameService, private store: Store) {}
 
   onInputClick(input: number): void {
     this.gameService.startNewGame('expert');

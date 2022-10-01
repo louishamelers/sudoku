@@ -12,12 +12,9 @@ import { setActiveCell, setGameData } from '../state/game.actions';
   providedIn: 'root',
 })
 export class GameService {
+  constructor(private store: Store) {}
 
-  constructor(private store: Store) { }
-
-  setValue(value: number): void {
-
-  }
+  setValue(value: number): void {}
 
   setActiveField(cell: Cell): void {
     this.store.dispatch(setActiveCell({ cell }));
@@ -45,12 +42,14 @@ export class GameService {
       };
     });
 
-    this.store.dispatch(setGameData({
-      gameData: {
-        board,
-        difficulty,
-        activeCell: null,
-      }
-    }))
-  };
+    this.store.dispatch(
+      setGameData({
+        gameData: {
+          board,
+          difficulty,
+          activeCell: null,
+        },
+      }),
+    );
+  }
 }

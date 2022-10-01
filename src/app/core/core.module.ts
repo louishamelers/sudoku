@@ -1,5 +1,5 @@
-import { NgModule, Optional, SkipSelf } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
@@ -8,10 +8,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 // import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 // import { EffectsModule } from '@ngrx/effects';
 
-import { environment } from "src/environments/environment";
-import { ModuleLoadsOnceGuard } from "../shared/util/module-loads-once.guard";
+import { environment } from 'src/environments/environment';
+import { ModuleLoadsOnceGuard } from '../shared/util/module-loads-once.guard';
 
-import { gameReducer } from "./state/game.reducer";
+import { gameReducer } from './state/game.reducer';
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import { gameReducer } from "./state/game.reducer";
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
-  ]
+  ],
 })
 export class CoreModule extends ModuleLoadsOnceGuard {
   // Ensure that CoreModule is only loaded into AppModule

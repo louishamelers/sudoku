@@ -12,15 +12,12 @@ import { Cell } from 'src/app/shared/models/game.model';
 export class BoardComponent implements OnInit {
   gameData$ = this.store.select(selectActiveGameState);
 
-
   constructor(private store: Store, private gameService: GameService) {
-
     // this.store.select(selectActiveGameState).subscribe(e => console.log(e))
     // this.store.select(selectGameData).subscribe(e => console.log(e))
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onFieldClick(cell: Cell): void {
     this.gameService.setActiveField(cell);
