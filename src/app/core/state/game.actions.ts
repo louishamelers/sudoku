@@ -6,3 +6,5 @@ export const setGameData = createAction('[GAME] set game data', props<{ gameData
 export const setActiveCell = createAction('[GAME] set active field-cell', props<{ cell: Cell }>());
 
 export const setBoard = createAction('[GAME] set board', props<{ board: Board }>());
+
+export const setValue = createAction('[GAME] set value', props<{ value: number }>());

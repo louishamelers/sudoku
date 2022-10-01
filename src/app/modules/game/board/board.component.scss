@@ -3,6 +3,7 @@ $active-color: #b7c4ff;
 $highlight-row-color: #e8e8e8;
 $highlight-col-color: #e8e8e8;
 $highlight-same-color: #cacaca;
+$text-color-wrong: red;
 $text-color: #3f51b5;
 $text-color--readonly: #000;
 $background-color: white;
@@ -36,6 +37,10 @@ $background-color: white;
 
   &.highlight-same {
     background: $highlight-same-color;
+  }
+
+  &.highlight-wrong {
+    color: $text-color-wrong !important;
   }
 
   &.active {

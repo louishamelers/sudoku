@@ -3,20 +3,21 @@ import { CommonModule } from '@angular/common';
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 // import { RouterStoreModule } from '@ngrx/router-store';
-// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-// import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from 'src/environments/environment';
 import { ModuleLoadsOnceGuard } from '../shared/util/module-loads-once.guard';
 
 import { gameReducer } from './state/game.reducer';
+import { GameEffects } from './state/game.effects';
 
 @NgModule({
   imports: [
     CommonModule,
     StoreModule.forRoot({ gameData: gameReducer }),
+    EffectsModule.forRoot([GameEffects]),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

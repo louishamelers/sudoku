@@ -4,9 +4,9 @@ import { Sudoku as RawSudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { getSudoku } from 'sudoku-gen';
 
 import { environment } from 'src/environments/environment';
-import { Board, Cell, Difficulty, Field } from 'src/app/shared/models/game.model';
+import { Board, Cell, Difficulty, Field, FieldCell, GameData } from 'src/app/shared/models/game.model';
 import { Store } from '@ngrx/store';
-import { setActiveCell, setGameData } from '../state/game.actions';
+import { setActiveCell, setBoard, setGameData } from '../state/game.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,17 @@ import { setActiveCell, setGameData } from '../state/game.actions';
 export class GameService {
   constructor(private store: Store) {}
 
-  setValue(value: number): void {}
+  setValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): void {
+    if (!board || !activeFieldCell || activeFieldCell.readonly) return;
+
+    this.store.dispatch(
+      setBoard({
+        board: board.map((row, rowIndex) =>
+          row.map((field, colIndex) => (rowIndex === activeFieldCell.row && colIndex === activeFieldCell.col ? { ...field, value } : field)),
+        ),
+      }),
+    );
+  }
 
   setActiveField(cell: Cell): void {
     this.store.dispatch(setActiveCell({ cell }));
