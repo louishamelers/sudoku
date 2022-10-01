@@ -1,4 +1,4 @@
-<ng-container *ngIf="sudokuData$ | async as gameData">
+<ng-container *ngIf="gameData$ | async as gameData">
   <ng-container *ngFor="let row of gameData.board; index as rowIndex">
     <div
       class="cell"
@@ -8,11 +8,11 @@
       [class.left]="colIndex % 3 === 0"
       [class.right]="colIndex % 3 === 2"
       [class.readonly]="field.readonly"
-      [class.highlight-row]="rowIndex === gameData.activeCell?.row"
-      [class.highlight-col]="colIndex === gameData.activeCell?.col"
-      [class.highlight-same]="gameData.activeCell?.value && gameData.activeCell?.value === field?.value"
-      [class.active]="gameData.activeCell?.col === colIndex && gameData.activeCell?.row === rowIndex"
-      (click)="onFieldClick(field)"
+      [class.highlight-row]="rowIndex === gameData.activeFieldCell?.row"
+      [class.highlight-col]="colIndex === gameData.activeFieldCell?.col"
+      [class.highlight-same]="gameData.activeFieldCell?.value && gameData.activeFieldCell?.value === field?.value"
+      [class.active]="gameData.activeFieldCell?.col === colIndex && gameData.activeFieldCell?.row === rowIndex"
+      (click)="onFieldClick({row: rowIndex, col: colIndex})"
     >
       <div class="value">{{ field.value }}</div>
     </div>

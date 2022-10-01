@@ -1,39 +1,32 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, ReplaySubject, Subject, tap, withLatestFrom } from 'rxjs';
-import { Sudoku, SudokuField } from 'src/app/shared/models/sudoku.model';
 import { Sudoku as RawSudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { getSudoku } from 'sudoku-gen';
-import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 
 import { environment } from 'src/environments/environment';
+import { Board, Cell, Difficulty, Field } from 'src/app/shared/models/game.model';
+import { Store } from '@ngrx/store';
+import { setActiveCell, setGameData } from '../state/game.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  private puzzleSubject$ = new ReplaySubject<Sudoku | undefined>();
-  private activeFieldSubject$ = new ReplaySubject<SudokuField | undefined>();
 
-  public puzzle$ = this.puzzleSubject$.asObservable();
-  public activeCell$ = this.activeFieldSubject$.pipe(
-    withLatestFrom(this.puzzleSubject$),
-    map(([activeField, sudoku]) => {
-      const row = activeField ? sudoku?.findIndex((row) => row.indexOf(activeField) !== -1) : undefined;
-      const col = activeField && row ? sudoku?.[row].indexOf(activeField) : undefined;
+  constructor(private store: Store) { }
 
-      return { row, col, value: activeField?.value };
-    }),
-  );
+  setValue(value: number): void {
 
-  setActiveField(field: SudokuField): void {
-    this.activeFieldSubject$.next(field);
   }
 
-  startNewGame(difficulty: Difficulty): void {
+  setActiveField(cell: Cell): void {
+    this.store.dispatch(setActiveCell({ cell }));
+  }
+
+  startNewGame(difficulty: Difficulty) {
+    const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
+
     const rawSudoku = getSudoku(difficulty);
-
-    const sudoku: Sudoku = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
-
     const rawPuzzle = Array.from(rawSudoku.puzzle);
     const rawSolution = Array.from(rawSudoku.solution);
 
@@ -45,13 +38,19 @@ export class GameService {
       const value: number | undefined = rawValue !== '-' ? Number(rawValue) : undefined;
       const answer: number | undefined = rawSolution[index] !== '-' ? Number(rawSolution[index]) : undefined;
 
-      sudoku[row][column] = {
+      board[row][column] = {
         value,
         answer,
         readonly: !!value,
       };
     });
 
-    this.puzzleSubject$.next(sudoku);
-  }
+    this.store.dispatch(setGameData({
+      gameData: {
+        board,
+        difficulty,
+        activeCell: null,
+      }
+    }))
+  };
 }

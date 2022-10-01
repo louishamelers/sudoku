@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest, map, startWith } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { GameService } from 'src/app/core/services/game.service';
-import { SudokuField } from 'src/app/shared/models/sudoku.model';
+import { selectActiveGameState, selectGameData } from 'src/app/core/state/game.selectors';
+import { Cell } from 'src/app/shared/models/game.model';
 
 @Component({
   selector: 'app-board',
@@ -9,17 +10,19 @@ import { SudokuField } from 'src/app/shared/models/sudoku.model';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  sudokuData$ = combineLatest([this.gameService.puzzle$.pipe(startWith(undefined)), this.gameService.activeCell$.pipe(startWith(undefined))]).pipe(
-    map(([board, activeCell]) => ({ board, activeCell })),
-  );
+  gameData$ = this.store.select(selectActiveGameState);
 
-  constructor(private gameService: GameService) {}
 
-  ngOnInit(): void {
-    this.gameService.startNewGame('expert');
+  constructor(private store: Store, private gameService: GameService) {
+
+    // this.store.select(selectActiveGameState).subscribe(e => console.log(e))
+    // this.store.select(selectGameData).subscribe(e => console.log(e))
   }
 
-  onFieldClick(field: SudokuField): void {
-    this.gameService.setActiveField(field);
+  ngOnInit(): void {
+  }
+
+  onFieldClick(cell: Cell): void {
+    this.gameService.setActiveField(cell);
   }
 }
