@@ -10,8 +10,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { environment } from 'src/environments/environment';
 import { ModuleLoadsOnceGuard } from '../shared/util/module-loads-once.guard';
 
-import { gameReducer } from './state/game.reducer';
-import { GameEffects } from './state/game.effects';
+import { gameReducer } from './state/game/game.reducer';
+import { GameEffects } from './state/game/game.effects';
 
 @NgModule({
   imports: [

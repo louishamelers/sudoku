@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { startNewGame } from 'src/app/core/state/game.actions';
+import { startNewGame } from 'src/app/core/state/game/game.actions';
 
 @Component({
   selector: 'app-game',

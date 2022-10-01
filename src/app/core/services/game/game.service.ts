@@ -6,15 +6,15 @@ import { getSudoku } from 'sudoku-gen';
 import { environment } from 'src/environments/environment';
 import { Board, Cell, Difficulty, Field, FieldCell, GameData } from 'src/app/shared/models/game.model';
 import { Store } from '@ngrx/store';
-import { setActiveCell, setBoard, setGameData } from '../state/game.actions';
+import { setActiveCell, setBoard, setGameData } from '../../state/game/game.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GameService {
+export class BoardService {
   constructor(private store: Store) {}
 
-  setValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): void {
+  setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): void {
     if (!board || !activeFieldCell || activeFieldCell.readonly) return;
 
     this.store.dispatch(
@@ -26,11 +26,7 @@ export class GameService {
     );
   }
 
-  setActiveField(cell: Cell): void {
-    this.store.dispatch(setActiveCell({ cell }));
-  }
-
-  startNewGame(difficulty: Difficulty) {
+  startNewGame(difficulty: Difficulty): void {
     const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
 
     const rawSudoku = getSudoku(difficulty);

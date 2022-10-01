@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GameService } from 'src/app/core/services/game.service';
-import { setValue } from 'src/app/core/state/game.actions';
+import { setValue } from 'src/app/core/state/game/game.actions';
 
 @Component({
   selector: 'app-input',

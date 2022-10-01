@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GameService } from 'src/app/core/services/game.service';
-import { selectActiveGameState, selectGameBoard, selectGameData } from 'src/app/core/state/game.selectors';
+import { setActiveCell } from 'src/app/core/state/game/game.actions';
+import { selectActiveGameState } from 'src/app/core/state/game/game.selectors';
 import { Cell } from 'src/app/shared/models/game.model';
 
 @Component({
@@ -12,11 +12,11 @@ import { Cell } from 'src/app/shared/models/game.model';
 export class BoardComponent implements OnInit {
   gameData$ = this.store.select(selectActiveGameState);
 
-  constructor(private store: Store, private gameService: GameService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {}
 
   onFieldClick(cell: Cell): void {
-    this.gameService.setActiveField(cell);
+    this.store.dispatch(setActiveCell({ cell }));
   }
 }

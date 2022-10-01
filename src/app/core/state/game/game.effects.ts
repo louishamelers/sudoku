@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { exhaustMap, tap } from 'rxjs';
-import { GameService } from '../services/game.service';
+import { tap } from 'rxjs';
+import { BoardService } from '../../services/game/game.service';
 import { setValue, startNewGame } from './game.actions';
-import { selectActiveFieldCell, selectGameBoard, selectGameData } from './game.selectors';
+import { selectActiveFieldCell, selectGameBoard } from './game.selectors';
 
 @Injectable()
 export class GameEffects {
@@ -13,7 +13,7 @@ export class GameEffects {
       this.actions$.pipe(
         ofType(setValue),
         concatLatestFrom(() => [this.store.select(selectGameBoard), this.store.select(selectActiveFieldCell)]),
-        tap(([{ value }, board, activeCell]) => this.gameService.setValue(value, board, activeCell)),
+        tap(([{ value }, board, activeCell]) => this.gameService.setCellValue(value, board, activeCell)),
       ),
     { dispatch: false },
   );
@@ -26,5 +26,5 @@ export class GameEffects {
     { dispatch: false },
   );
 
-  constructor(private store: Store, private actions$: Actions, private gameService: GameService) {}
+  constructor(private store: Store, private actions$: Actions, private gameService: BoardService) {}
 }
