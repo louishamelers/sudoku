@@ -4,11 +4,6 @@ import { GameComponent } from './modules/game/game.component';
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'game',
-    pathMatch: 'full',
-  },
-  {
-    path: 'game',
-    component: GameComponent,
+    loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
   },
 ];
