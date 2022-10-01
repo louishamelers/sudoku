@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { setActiveCell } from 'src/app/core/state/game/game.actions';
 import { selectActiveGameState } from 'src/app/core/state/game/game.selectors';
-import { Cell } from 'src/app/shared/models/game.model';
+import { Cell } from 'src/app/shared/models/board.model';
 
 @Component({
   selector: 'app-board',
@@ -10,7 +10,7 @@ import { Cell } from 'src/app/shared/models/game.model';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-  gameData$ = this.store.select(selectActiveGameState);
+  gameState$ = this.store.select(selectActiveGameState);
 
   constructor(private store: Store) {}
 

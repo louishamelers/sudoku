@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, ReplaySubject, Subject, tap, withLatestFrom } from 'rxjs';
-import { Sudoku as RawSudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { getSudoku } from 'sudoku-gen';
 
 import { environment } from 'src/environments/environment';
-import { Board, Cell, Difficulty, Field, FieldCell, GameData } from 'src/app/shared/models/game.model';
 import { Store } from '@ngrx/store';
-import { setActiveCell, setBoard, setGameData } from '../../state/game/game.actions';
+import { setBoard, setGameState } from '../../state/game/game.actions';
+import { Board, FieldCell } from 'src/app/shared/models/board.model';
+import { Difficulty } from 'src/app/shared/models/difficulty.model';
 
 @Injectable({
   providedIn: 'root',
@@ -49,8 +48,8 @@ export class BoardService {
     });
 
     this.store.dispatch(
-      setGameData({
-        gameData: {
+      setGameState({
+        gameState: {
           board,
           difficulty,
           activeCell: null,

@@ -1,17 +1,23 @@
-import { state } from '@angular/animations';
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { Board, Cell, Difficulty, Field, FieldCell, GameData } from 'src/app/shared/models/game.model';
-import { setActiveCell, setBoard, setGameData } from './game.actions';
+import { createReducer, on } from '@ngrx/store';
+import { Board, Cell } from 'src/app/shared/models/board.model';
+import { Difficulty } from 'src/app/shared/models/difficulty.model';
+import { setActiveCell, setBoard, setGameState } from './game.actions';
 
-const initialState: GameData = {
+export interface GameState {
+  difficulty: Difficulty | null;
+  board: Board | null;
+  activeCell: Cell | null;
+}
+
+const initialState: GameState = {
   difficulty: null,
   board: null,
   activeCell: null,
 };
 
-export const gameReducer = createReducer<GameData>(
+export const gameReducer = createReducer<GameState>(
   initialState,
-  on(setGameData, (_state, { gameData }) => gameData),
+  on(setGameState, (_state, { gameState }) => gameState),
   on(setActiveCell, (state, { cell }) => ({ ...state, activeCell: cell })),
   on(setBoard, (state, { board }) => ({ ...state, board })),
 );

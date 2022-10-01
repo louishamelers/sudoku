@@ -1,9 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { Board, Cell, Difficulty, GameData } from 'src/app/shared/models/game.model';
+import { Cell, Board } from 'src/app/shared/models/board.model';
+import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
+import { GameState } from './game.reducer';
 
-export const setGameData = createAction('[GAME] set game data', props<{ gameData: GameData }>());
-export const setActiveCell = createAction('[GAME] set active field-cell', props<{ cell: Cell }>());
-export const setBoard = createAction('[GAME] set board', props<{ board: Board }>());
+export const setGameState = createAction('[GAME Service] set game data', props<{ gameState: GameState }>());
+export const setBoard = createAction('[GAME Service] set board', props<{ board: Board }>());
+
+export const setActiveCell = createAction('[GAME Board] set active cell', props<{ cell: Cell }>());
+export const setValue = createAction('[GAME Input] set value', props<{ value: number }>());
 
 export const startNewGame = createAction('[GAME] start new game', props<{ difficulty: Difficulty }>());
-export const setValue = createAction('[GAME] set value', props<{ value: number }>());

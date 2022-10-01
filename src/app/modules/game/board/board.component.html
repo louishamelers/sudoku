@@ -1,5 +1,5 @@
-<ng-container *ngIf="gameData$ | async as gameData">
-  <ng-container *ngFor="let row of gameData.board; index as rowIndex">
+<ng-container *ngIf="gameState$ | async as gameState">
+  <ng-container *ngFor="let row of gameState.board; index as rowIndex">
     <div
       class="cell"
       *ngFor="let field of row; index as colIndex"
@@ -8,11 +8,11 @@
       [class.left]="colIndex % 3 === 0"
       [class.right]="colIndex % 3 === 2"
       [class.readonly]="field.readonly"
-      [class.highlight-row]="rowIndex === gameData.activeFieldCell?.row"
-      [class.highlight-col]="colIndex === gameData.activeFieldCell?.col"
-      [class.highlight-same]="gameData.activeFieldCell?.value && gameData.activeFieldCell?.value === field?.value"
+      [class.highlight-row]="rowIndex === gameState.activeFieldCell?.row"
+      [class.highlight-col]="colIndex === gameState.activeFieldCell?.col"
+      [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"
       [class.highlight-wrong]="field.value !== field.answer"
-      [class.active]="gameData.activeFieldCell?.col === colIndex && gameData.activeFieldCell?.row === rowIndex"
+      [class.active]="gameState.activeFieldCell?.col === colIndex && gameState.activeFieldCell?.row === rowIndex"
       (click)="onFieldClick({ row: rowIndex, col: colIndex })"
     >
       <div class="value">{{ field.value }}</div>

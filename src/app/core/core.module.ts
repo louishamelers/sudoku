@@ -16,7 +16,7 @@ import { GameEffects } from './state/game/game.effects';
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forRoot({ gameData: gameReducer }),
+    StoreModule.forRoot({ gameState: gameReducer }),
     EffectsModule.forRoot([GameEffects]),
     // Instrumentation must be imported after importing StoreModule (config is optional)
     StoreDevtoolsModule.instrument({
