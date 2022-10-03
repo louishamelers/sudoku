@@ -35,6 +35,10 @@ $background-color: white;
     background: $highlight-col-color;
   }
 
+  &.highlight-block {
+    background: $highlight-col-color;
+  }
+
   &.highlight-same {
     background: $highlight-same-color;
   }

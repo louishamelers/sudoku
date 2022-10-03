@@ -8,6 +8,10 @@
       [class.left]="colIndex % 3 === 0"
       [class.right]="colIndex % 3 === 2"
       [class.readonly]="field.readonly"
+      [class.highlight-block]="
+        (gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
+        (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)
+      "
       [class.highlight-row]="rowIndex === gameState.activeFieldCell?.row"
       [class.highlight-col]="colIndex === gameState.activeFieldCell?.col"
       [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"

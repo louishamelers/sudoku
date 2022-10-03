@@ -5,9 +5,10 @@ import { GameComponent } from './game.component';
 import { InputComponent } from './input/input.component';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './game.routes';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ROUTES)],
+  imports: [CommonModule, RouterModule.forChild(ROUTES), SharedModule],
   declarations: [BoardComponent, GameComponent, InputComponent],
   exports: [GameComponent],
 })
