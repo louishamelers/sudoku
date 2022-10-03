@@ -8,6 +8,8 @@ import { setValue } from 'src/app/core/state/game/game.actions';
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
+  inputValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
   constructor(private store: Store) {}
 
   onInputClick(input: number): void {

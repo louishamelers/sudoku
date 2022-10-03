@@ -8,6 +8,6 @@ import { startNewGame } from 'src/app/core/state/game/game.actions';
 })
 export class GameComponent {
   constructor(private store: Store) {
-    this.store.dispatch(startNewGame({ difficulty: 'expert' }));
+    this.store.dispatch(startNewGame({ difficulty: 'easy' }));
   }
 }

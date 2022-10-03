@@ -3,9 +3,9 @@ import { getSudoku } from 'sudoku-gen';
 
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
-import { setBoard, setGameState } from '../../state/game/game.actions';
 import { Board, FieldCell } from 'src/app/shared/models/board.model';
 import { Difficulty } from 'src/app/shared/models/difficulty.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,19 +13,15 @@ import { Difficulty } from 'src/app/shared/models/difficulty.model';
 export class BoardService {
   constructor(private store: Store) {}
 
-  setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): void {
+  setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | void {
     if (!board || !activeFieldCell || activeFieldCell.readonly) return;
 
-    this.store.dispatch(
-      setBoard({
-        board: board.map((row, rowIndex) =>
-          row.map((field, colIndex) => (rowIndex === activeFieldCell.row && colIndex === activeFieldCell.col ? { ...field, value } : field)),
-        ),
-      }),
+    return board.map((row, rowIndex) =>
+      row.map((field, colIndex) => (rowIndex === activeFieldCell.row && colIndex === activeFieldCell.col ? { ...field, value } : field)),
     );
   }
 
-  startNewGame(difficulty: Difficulty): void {
+  startNewGame(difficulty: Difficulty): Board {
     const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
 
     const rawSudoku = getSudoku(difficulty);
@@ -47,14 +43,6 @@ export class BoardService {
       };
     });
 
-    this.store.dispatch(
-      setGameState({
-        gameState: {
-          board,
-          difficulty,
-          activeCell: null,
-        },
-      }),
-    );
+    return board;
   }
 }
