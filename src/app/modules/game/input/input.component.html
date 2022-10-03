@@ -2,7 +2,7 @@
   <button class="button" *ngFor="let val of inputValues" (click)="onInputClick(val)">
     <span>{{ val }}</span>
   </button>
-  <button class="button border border-red-500">
+  <button class="button border border-red-500" (click)="onClearClick()">
     <span class="material-icons text-s text-red-400 mt-1"> delete </span>
   </button>
 </div>

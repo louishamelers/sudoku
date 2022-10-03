@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { setValue } from 'src/app/core/state/game/game.actions';
+import { clearValue, setValue } from 'src/app/core/state/game/game.actions';
 
 @Component({
   selector: 'app-input',
@@ -14,5 +14,9 @@ export class InputComponent {
 
   onInputClick(input: number): void {
     this.store.dispatch(setValue({ value: input }));
+  }
+
+  onClearClick(): void {
+    this.store.dispatch(clearValue());
   }
 }

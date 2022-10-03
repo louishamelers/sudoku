@@ -21,6 +21,14 @@ export class BoardService {
     );
   }
 
+  clearCellValue(board: Board | null, activeFieldCell: FieldCell | null): Board | null {
+    if (!board || !activeFieldCell || activeFieldCell.readonly) return board;
+
+    return board.map((row, rowIndex) =>
+      row.map((field, colIndex) => (rowIndex === activeFieldCell.row && colIndex === activeFieldCell.col ? { ...field, value: undefined } : field)),
+    );
+  }
+
   startNewGame(difficulty: Difficulty): Board {
     const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
 

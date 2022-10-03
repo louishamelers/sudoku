@@ -6,6 +6,7 @@ export const setBoard = createAction('[GAME Service] set board', props<{ board: 
 
 export const setActiveCell = createAction('[GAME Board] set active cell', props<{ cell: Cell | null }>());
 export const setValue = createAction('[GAME Input] set value', props<{ value: number }>());
+export const clearValue = createAction('[GAME Input] Clear value');
 
 export const startNewGame = createAction('[GAME input] start new game', props<{ difficulty: Difficulty }>());
 export const loadNewGame = createAction('[GAME result] load new game', props<{ difficulty: Difficulty; board: Board }>());
