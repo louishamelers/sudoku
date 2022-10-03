@@ -1,11 +1,8 @@
-<button class="button" *ngFor="let val of inputValues" (click)="onInputClick(val)">
-  {{ val }}
-</button>
-<button class="button">
-  <span class="material-symbols-outlined"> delete </span>
-</button>
-
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Button</button>
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  <span class="material-symbols-outlined"> delete </span>
-</button>
+<div class="grid gap-4 select-none grid-cols-5 items-stretch m-7">
+  <button class="button" *ngFor="let val of inputValues" (click)="onInputClick(val)">
+    <span>{{ val }}</span>
+  </button>
+  <button class="button border border-red-500">
+    <span class="material-icons text-s text-red-400 mt-1"> delete </span>
+  </button>
+</div>
