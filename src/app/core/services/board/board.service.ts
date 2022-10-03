@@ -13,8 +13,8 @@ import { Observable } from 'rxjs';
 export class BoardService {
   constructor(private store: Store) {}
 
-  setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | void {
-    if (!board || !activeFieldCell || activeFieldCell.readonly) return;
+  setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | null {
+    if (!board || !activeFieldCell || activeFieldCell.readonly) return board;
 
     return board.map((row, rowIndex) =>
       row.map((field, colIndex) => (rowIndex === activeFieldCell.row && colIndex === activeFieldCell.col ? { ...field, value } : field)),

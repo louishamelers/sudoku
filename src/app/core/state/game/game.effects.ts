@@ -12,24 +12,20 @@ export class GameEffects {
     this.actions$.pipe(
       ofType(setValue),
       concatLatestFrom(() => [this.store.select(selectGameBoard), this.store.select(selectActiveFieldCell)]),
-      switchMap(([{ value }, board, activeFieldCell]) => {
-        const newBoard = this.boardService.setCellValue(value, board, activeFieldCell);
-        return of(setBoard({ board: newBoard ?? null }));
-      }),
+      switchMap(([{ value }, board, activeFieldCell]) => of(setBoard({ board: this.boardService.setCellValue(value, board, activeFieldCell) }))),
     ),
   );
   startNewGame$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startNewGame),
-      switchMap(({ difficulty }) => {
-        const board = this.boardService.startNewGame(difficulty);
-        return of(
+      switchMap(({ difficulty }) =>
+        of(
           loadNewGame({
             difficulty,
-            board,
+            board: this.boardService.startNewGame(difficulty),
           }),
-        );
-      }),
+        ),
+      ),
     ),
   );
 
