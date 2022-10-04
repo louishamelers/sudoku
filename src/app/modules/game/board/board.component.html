@@ -7,12 +7,12 @@
       [class.bottom]="rowIndex % 3 === 2"
       [class.left]="colIndex % 3 === 0"
       [class.right]="colIndex % 3 === 2"
-      [class.highlight-block]="
-        (gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
-        (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)
+      [class.highlight]="
+        ((gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
+          (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)) ||
+        rowIndex === gameState.activeFieldCell?.row ||
+        colIndex === gameState.activeFieldCell?.col
       "
-      [class.highlight-row]="rowIndex === gameState.activeFieldCell?.row"
-      [class.highlight-col]="colIndex === gameState.activeFieldCell?.col"
       [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"
       [class.highlight-wrong]="field.value !== field.answer"
       [class.active]="gameState.activeFieldCell?.col === colIndex && gameState.activeFieldCell?.row === rowIndex"

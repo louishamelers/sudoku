@@ -4,7 +4,7 @@ import { startNewGame } from 'src/app/core/state/game/game.actions';
 
 @Component({
   selector: 'app-game',
-  template: '<app-board></app-board><app-input></app-input>',
+  template: '<div class="m-7"><app-board></app-board></div><app-input></app-input>',
 })
 export class GameComponent {
   constructor(private store: Store) {

@@ -1,24 +1,16 @@
 :host {
-  @apply bg-gray-300 border border-gray-300 grid grid-cols-[repeat(9,_1fr)] gap-px text-gray-800;
+  @apply grid grid-cols-[repeat(9,_1fr)] text-gray-800;
 }
 
 .cell {
-  @apply bg-white relative cursor-pointer;
+  @apply bg-white relative cursor-pointer border;
 
-  &.highlight-row {
-    @apply bg-gray-100;
-  }
-
-  &.highlight-col {
-    @apply bg-gray-100;
-  }
-
-  &.highlight-block {
+  &.highlight {
     @apply bg-gray-100;
   }
 
   &.highlight-same {
-    @apply bg-gray-300;
+    @apply bg-gray-200;
   }
 
   &.highlight-wrong {
@@ -26,8 +18,7 @@
   }
 
   &.active {
-    @apply bg-green-400;
-    // background: $active-color;
+    @apply bg-blue-200 border-blue-300;
   }
 
   &:after {
@@ -38,23 +29,19 @@
   }
 
   &.top {
-    @apply border border-t-gray-400;
-    // border-top: 1px solid $border-color;
+    @apply border border-t-gray-300;
   }
 
   &.bottom {
-    @apply border border-b-gray-400;
-    // border-bottom: 1px solid $border-color;
+    @apply border border-b-gray-300;
   }
 
   &.left {
-    @apply border border-l-gray-400;
-    // border-left: 1px solid $border-color;
+    @apply border border-l-gray-300;
   }
 
   &.right {
-    @apply border border-r-gray-400;
-    // border-right: 1px solid $border-color;
+    @apply border border-r-gray-300;
   }
 
   .value {

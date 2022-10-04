@@ -29,7 +29,7 @@ export class GameEffects {
         of(
           loadNewGame({
             difficulty,
-            board: this.boardService.startNewGame(difficulty),
+            board: this.boardService.generateBoard(difficulty),
           }),
         ),
       ),

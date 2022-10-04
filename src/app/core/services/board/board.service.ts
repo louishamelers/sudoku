@@ -14,7 +14,7 @@ export class BoardService {
   constructor(private store: Store) {}
 
   setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | null {
-    if (!board || !activeFieldCell || activeFieldCell.readonly) return board;
+    if (!board || !activeFieldCell || activeFieldCell.value) return board;
 
     return board.map((row, rowIndex) =>
       row.map((field, colIndex) => (rowIndex === activeFieldCell.row && colIndex === activeFieldCell.col ? { ...field, value } : field)),
@@ -29,7 +29,7 @@ export class BoardService {
     );
   }
 
-  startNewGame(difficulty: Difficulty): Board {
+  generateBoard(difficulty: Difficulty): Board {
     const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
 
     const rawSudoku = getSudoku(difficulty);
