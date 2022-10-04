@@ -1,8 +1,8 @@
 <div class="grid gap-4 select-none grid-cols-5 items-stretch m-7">
-  <button class="button" *ngFor="let val of inputValues" (click)="onInputClick(val)">
+  <button class="button bg-gray-100 border border-gray-200" *ngFor="let val of inputValues" (click)="onInputClick(val)">
     <span>{{ val }}</span>
   </button>
-  <button class="button border border-red-500" (click)="onClearClick()">
+  <button class="button border border-red-500 bg-red-100" (click)="onClearClick()">
     <span class="material-icons text-s text-red-400 mt-1"> delete </span>
   </button>
 </div>

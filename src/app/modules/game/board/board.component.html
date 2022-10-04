@@ -7,7 +7,6 @@
       [class.bottom]="rowIndex % 3 === 2"
       [class.left]="colIndex % 3 === 0"
       [class.right]="colIndex % 3 === 2"
-      [class.readonly]="field.readonly"
       [class.highlight-block]="
         (gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
         (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)

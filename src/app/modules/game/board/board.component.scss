@@ -1,54 +1,33 @@
-$border-color: #3f51b5;
-$active-color: #b7c4ff;
-$highlight-row-color: #e8e8e8;
-$highlight-col-color: #e8e8e8;
-$highlight-same-color: #cacaca;
-$text-color-wrong: red;
-$text-color: #3f51b5;
-$text-color--readonly: #000;
-$background-color: white;
-
 :host {
-  background: $border-color;
-  border: 1px solid $border-color;
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-column-gap: 1px;
-  grid-row-gap: 1px;
-  color: $text-color;
+  @apply bg-gray-300 border border-gray-300 grid grid-cols-[repeat(9,_1fr)] gap-px text-gray-800;
 }
 
 .cell {
-  background: $background-color;
-  position: relative;
-  cursor: pointer;
-
-  &.readonly {
-    color: $text-color--readonly;
-  }
+  @apply bg-white relative cursor-pointer;
 
   &.highlight-row {
-    background: $highlight-row-color;
+    @apply bg-gray-100;
   }
 
   &.highlight-col {
-    background: $highlight-col-color;
+    @apply bg-gray-100;
   }
 
   &.highlight-block {
-    background: $highlight-col-color;
+    @apply bg-gray-100;
   }
 
   &.highlight-same {
-    background: $highlight-same-color;
+    @apply bg-gray-300;
   }
 
   &.highlight-wrong {
-    color: $text-color-wrong !important;
+    @apply text-red-600;
   }
 
   &.active {
-    background: $active-color;
+    @apply bg-green-400;
+    // background: $active-color;
   }
 
   &:after {
@@ -59,19 +38,23 @@ $background-color: white;
   }
 
   &.top {
-    border-top: 1px solid $border-color;
+    @apply border border-t-gray-400;
+    // border-top: 1px solid $border-color;
   }
 
   &.bottom {
-    border-bottom: 1px solid $border-color;
+    @apply border border-b-gray-400;
+    // border-bottom: 1px solid $border-color;
   }
 
   &.left {
-    border-left: 1px solid $border-color;
+    @apply border border-l-gray-400;
+    // border-left: 1px solid $border-color;
   }
 
   &.right {
-    border-right: 1px solid $border-color;
+    @apply border border-r-gray-400;
+    // border-right: 1px solid $border-color;
   }
 
   .value {
