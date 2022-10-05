@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { clearValue, setValue } from 'src/app/core/state/game/game.actions';
+import { selectUsedNumbers } from 'src/app/core/state/game/game.selectors';
 
 @Component({
   selector: 'app-input',
@@ -8,9 +9,12 @@ import { clearValue, setValue } from 'src/app/core/state/game/game.actions';
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
+  usedNumbers$ = this.store.select(selectUsedNumbers);
   inputValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    this.usedNumbers$.subscribe(console.log);
+  }
 
   onInputClick(input: number): void {
     this.store.dispatch(setValue({ value: input }));

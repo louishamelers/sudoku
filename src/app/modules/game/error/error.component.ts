@@ -13,7 +13,5 @@ export class ErrorComponent {
   errors$ = this.store.select(selectErrors).pipe(map((errors) => ({ value: errors })));
   maxErrors = environment.maxErrors;
 
-  constructor(private store: Store) {
-    this.errors$.subscribe(console.log);
-  }
+  constructor(private store: Store) {}
 }

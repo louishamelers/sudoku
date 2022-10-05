@@ -15,3 +15,12 @@ export const selectActiveGameState = createSelector(selectGameBoard, selectActiv
   board,
   activeFieldCell,
 }));
+export const selectUsedNumbers = createSelector(selectGameBoard, (board) => {
+  const usedNumbers = Array(9).fill(0);
+  board?.forEach((col) =>
+    col.forEach((field) => {
+      if (field.value !== undefined) usedNumbers[field.value - 1] += 1;
+    }),
+  );
+  return usedNumbers;
+});
