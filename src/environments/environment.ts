@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   puzzleSize: 9,
-  errorLeeway: 3,
+  maxErrors: 3,
 };
 
 /*

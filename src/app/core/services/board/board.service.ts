@@ -45,7 +45,7 @@ export class BoardService {
       const answer: number | undefined = rawSolution[index] !== '-' ? Number(rawSolution[index]) : undefined;
 
       board[row][column] = {
-        value: answer,
+        value,
         answer,
         readonly: !!value,
       };

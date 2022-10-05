@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { concat, concatAll, of, switchMap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { BoardService } from '../../services/board/board.service';
 import { clearValue, detectedIncorrectAnswer, gameComplete, loadNewGame, setBoard, setValue, startNewGame } from './game.actions';
 import { selectActiveFieldCell, selectGameBoard } from './game.selectors';
+
+const maxErrors = environment.maxErrors;
 
 @Injectable()
 export class GameEffects {
