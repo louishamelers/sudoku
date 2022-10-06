@@ -3,6 +3,6 @@ import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-home',
-  template: '<app-difficulty-picker></app-difficulty-picker>',
+  templateUrl: './home.component.html',
 })
 export class HomeComponent {}
