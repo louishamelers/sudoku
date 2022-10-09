@@ -3,14 +3,14 @@
 }
 
 .cell {
-  @apply bg-white relative cursor-pointer border text-gray-600;
+  @apply bg-white relative cursor-pointer border border-gray-200 text-gray-600;
 
   &.highlight {
     @apply bg-gray-100;
   }
 
   &.highlight-same {
-    @apply bg-gray-200;
+    @apply bg-gray-50;
   }
 
   &.highlight-wrong {

@@ -7,7 +7,10 @@
       [class.bottom]="rowIndex % 3 === 2"
       [class.left]="colIndex % 3 === 0"
       [class.right]="colIndex % 3 === 2"
-      [class.bg-red-600]="colIndex === 8 && rowIndex === 8"
+      [class.rounded-tl-md]="colIndex === 0 && rowIndex === 0"
+      [class.rounded-tr-md]="colIndex === 8 && rowIndex === 0"
+      [class.rounded-br-md]="colIndex === 8 && rowIndex === 8"
+      [class.rounded-bl-md]="colIndex === 0 && rowIndex === 8"
       [class.highlight]="
         ((gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
           (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)) ||
