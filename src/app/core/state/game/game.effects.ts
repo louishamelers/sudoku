@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { concat, concatAll, map, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BoardService } from '../../services/board/board.service';
-import { clearValue, detectedIncorrectAnswer, gameComplete, loadNewGame, setBoard, setValue, startNewGame } from './game.actions';
-import { selectActiveFieldCell, selectGameBoard } from './game.selectors';
+import { clearValue, detectedIncorrectAnswer, gameLose, gameWon, loadNewGame, setBoard, setValue, startNewGame } from './game.actions';
+import { selectActiveFieldCell, selectErrors, selectGameBoard } from './game.selectors';
 
 const maxErrors = environment.maxErrors;
 
@@ -21,11 +21,7 @@ export class GameEffects {
         const wrongAnswer = activeFieldCell && activeFieldCell?.answer !== value && activeFieldCell?.value !== value;
         const complete = this.boardService.isComplete(updatedBoard);
 
-        return concat([
-          setBoard({ board: updatedBoard }),
-          ...(wrongAnswer ? [detectedIncorrectAnswer()] : []),
-          ...(complete ? [gameComplete()] : []),
-        ]);
+        return concat([setBoard({ board: updatedBoard }), ...(wrongAnswer ? [detectedIncorrectAnswer()] : []), ...(complete ? [gameWon()] : [])]);
       }),
     ),
   );
@@ -55,6 +51,31 @@ export class GameEffects {
       this.actions$.pipe(
         ofType(loadNewGame),
         tap(() => this.router.navigate(['/', 'game'])),
+      ),
+    { dispatch: false },
+  );
+  checkIfGameLose$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(detectedIncorrectAnswer),
+      switchMap(() => [this.store.select(selectErrors)]),
+      switchMap((errors) => {
+        return concat([gameLose()]);
+      }),
+    ),
+  );
+  winGame$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(gameWon),
+        tap(() => this.router.navigate(['/', 'game', 'winner'])),
+      ),
+    { dispatch: false },
+  );
+  loseGame$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(gameLose),
+        tap(() => this.router.navigate(['/', 'game', 'loser'])),
       ),
     { dispatch: false },
   );

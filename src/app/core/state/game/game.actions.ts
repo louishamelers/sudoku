@@ -3,7 +3,8 @@ import { Cell, Board } from 'src/app/shared/models/board.model';
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 
 export const setBoard = createAction('[GAME - app] set board', props<{ board: Board | null }>());
-export const gameComplete = createAction('[GAME - app] game complete');
+export const gameWon = createAction('[GAME - app] game won');
+export const gameLose = createAction('[GAME - app] game lost');
 export const loadNewGame = createAction('[GAME - app] load new game', props<{ difficulty: Difficulty; board: Board }>());
 export const detectedIncorrectAnswer = createAction('[GAME - app] detected incorrect answer');
 

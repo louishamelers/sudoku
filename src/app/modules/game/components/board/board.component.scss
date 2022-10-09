@@ -21,13 +21,6 @@
     @apply bg-blue-200 border-blue-300;
   }
 
-  &:after {
-    content: '';
-    display: block;
-    padding-top: 100%;
-    width: 100%;
-  }
-
   &.top {
     @apply border border-t-gray-300;
   }
@@ -56,5 +49,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    padding-top: 100%;
+    width: 100%;
   }
 }
