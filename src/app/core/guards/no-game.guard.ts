@@ -16,8 +16,6 @@ export class canActivateGameBoard implements CanActivate {
     return this.store.select(selectActiveGameState).pipe(
       map((gameState) => !!gameState.board),
       tap((canActivate) => {
-        console.log(canActivate);
-
         if (!canActivate) this.router.navigate([''], { queryParams: { returnUrl: state.url } });
       }),
     );

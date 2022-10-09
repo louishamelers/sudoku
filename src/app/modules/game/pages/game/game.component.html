@@ -4,7 +4,7 @@
       <span class="capitalize text-gray-600 text-2xl">{{ gameDifficulty }}</span>
     </div>
     <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
-      <span class="mr-2 text-gray-600 uppercase text-xs">mistake:</span>
+      <span class="mr-2 text-gray-600 uppercase text-xs">mistakes:</span>
       <span class="text-red-500 text-xs">{{ mistakes.value }}/{{ maxMistakes }}</span>
     </div>
   </div>
