@@ -1,4 +1,13 @@
-<div class="m-7"></div>
-<div class="m-7"><app-error></app-error></div>
-<div class="m-7"><app-board></app-board></div>
-<div class="m-7"><app-input></app-input></div>
+<div class="m-7">
+  <div class="my-4 flex justify-between">
+    <div *ngIf="gameDifficulty$ | async as gameDifficulty">
+      <span class="capitalize text-gray-600 text-2xl">{{ gameDifficulty }}</span>
+    </div>
+    <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
+      <span class="mr-2 text-gray-600 uppercase text-xs">mistake:</span>
+      <span class="text-red-500 text-xs">{{ mistakes.value }}/{{ maxMistakes }}</span>
+    </div>
+  </div>
+  <div class="my-4"><app-board></app-board></div>
+  <div class="my-4"><app-input></app-input></div>
+</div>

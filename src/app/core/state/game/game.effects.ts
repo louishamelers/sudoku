@@ -15,13 +15,19 @@ export class GameEffects {
   setValue$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setValue),
-      concatLatestFrom(() => [this.store.select(selectGameBoard), this.store.select(selectActiveFieldCell)]),
-      switchMap(([{ value }, board, activeFieldCell]) => {
+      concatLatestFrom(() => [this.store.select(selectGameBoard), this.store.select(selectActiveFieldCell), this.store.select(selectErrors)]),
+      switchMap(([{ value }, board, activeFieldCell, errors]) => {
         const updatedBoard = this.boardService.setCellValue(value, board, activeFieldCell);
         const wrongAnswer = activeFieldCell && activeFieldCell?.answer !== value && activeFieldCell?.value !== value;
         const complete = this.boardService.isComplete(updatedBoard);
+        const loseGame = wrongAnswer ? errors + 1 >= maxErrors : false;
 
-        return concat([setBoard({ board: updatedBoard }), ...(wrongAnswer ? [detectedIncorrectAnswer()] : []), ...(complete ? [gameWon()] : [])]);
+        return concat([
+          setBoard({ board: updatedBoard }),
+          ...(wrongAnswer ? [detectedIncorrectAnswer()] : []),
+          ...(complete ? [gameWon()] : []),
+          ...(loseGame ? [gameLose()] : []),
+        ]);
       }),
     ),
   );
@@ -53,15 +59,6 @@ export class GameEffects {
         tap(() => this.router.navigate(['/', 'game'])),
       ),
     { dispatch: false },
-  );
-  checkIfGameLose$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(detectedIncorrectAnswer),
-      switchMap(() => [this.store.select(selectErrors)]),
-      switchMap((errors) => {
-        return concat([gameLose()]);
-      }),
-    ),
   );
   winGame$ = createEffect(
     () =>

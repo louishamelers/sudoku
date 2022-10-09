@@ -3,7 +3,7 @@
 }
 
 .cell {
-  @apply bg-white relative cursor-pointer border;
+  @apply bg-white relative cursor-pointer border text-gray-600;
 
   &.highlight {
     @apply bg-gray-100;
