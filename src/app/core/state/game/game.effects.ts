@@ -18,7 +18,7 @@ export class GameEffects {
       concatLatestFrom(() => [this.store.select(selectGameBoard), this.store.select(selectActiveFieldCell), this.store.select(selectErrors)]),
       switchMap(([{ value }, board, activeFieldCell, errors]) => {
         const updatedBoard = this.boardService.setCellValue(value, board, activeFieldCell);
-        const wrongAnswer = activeFieldCell && activeFieldCell?.answer !== value && activeFieldCell?.value !== value;
+        const wrongAnswer = activeFieldCell && activeFieldCell?.answer !== value && activeFieldCell?.value !== value && !activeFieldCell.readonly;
         const complete = this.boardService.isComplete(updatedBoard);
         const loseGame = wrongAnswer ? errors + 1 >= maxErrors : false;
 

@@ -15,9 +15,9 @@
         ((gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
           (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)) ||
         rowIndex === gameState.activeFieldCell?.row ||
-        colIndex === gameState.activeFieldCell?.col
+        colIndex === gameState.activeFieldCell?.col ||
+        (gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value)
       "
-      [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"
       [class.highlight-wrong]="field.value !== field.answer"
       [class.active]="gameState.activeFieldCell?.col === colIndex && gameState.activeFieldCell?.row === rowIndex"
       (click)="onFieldClick({ row: rowIndex, col: colIndex })"
