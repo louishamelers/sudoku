@@ -1,13 +1,21 @@
-<div class="m-7">
-  <div class="my-4 flex justify-between">
-    <div *ngIf="gameDifficulty$ | async as gameDifficulty">
-      <span class="capitalize text-gray-600 text-2xl">{{ gameDifficulty }}</span>
+<div class="h-screen p-7 flex flex-col justify-between align-stretch">
+  <div>
+    <div class="mb-4 flex justify-between">
+      <div *ngIf="gameDifficulty$ | async as gameDifficulty">
+        <span class="capitalize text-gray-600 text-2xl">{{ gameDifficulty }}</span>
+      </div>
+      <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
+        <span class="text-gray-600 uppercase text-xs">mistakes:</span>
+        <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes - 1"
+          >{{ mistakes.value }}/{{ maxMistakes }}</span
+        >
+      </div>
     </div>
-    <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
-      <span class="mr-2 text-gray-600 uppercase text-xs">mistakes:</span>
-      <span class="text-red-500 text-xs">{{ mistakes.value }}/{{ maxMistakes }}</span>
-    </div>
+    <div class="mb-7"><app-board></app-board></div>
+    <div><app-input></app-input></div>
   </div>
-  <div class="my-4 mb-7"><app-board></app-board></div>
-  <div class="my-4"><app-input></app-input></div>
+  <button class="rounded-md border border-gray-100 text-gray-500 flex items-center justify-center h-12" routerLink="../">
+    <span class="material-icons text-s mr-2"> home </span>
+    <span class="uppercase"> home </span>
+  </button>
 </div>

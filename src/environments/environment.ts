@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  debugKey: '',
   puzzleSize: 9,
   maxErrors: 3,
 };

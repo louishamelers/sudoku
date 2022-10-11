@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent {
   constructor(private store: Store) {
-    if (!environment.production) {
+    if (!environment.production && environment.debugKey === 'game-board') {
       this.store.dispatch(startNewGame({ difficulty: 'expert' }));
     }
   }
