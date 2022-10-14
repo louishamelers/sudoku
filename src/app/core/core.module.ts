@@ -13,6 +13,7 @@ import { ModuleLoadsOnceGuard } from '../shared/util/module-loads-once.guard';
 import { gameReducer } from './state/game/game.reducer';
 import { GameEffects } from './state/game/game.effects';
 import { BrowserModule } from '@angular/platform-browser';
+import { UpdateService } from './services/update/update.service';
 
 /**
  * CoreModule, must be imported only by root module.
@@ -31,6 +32,7 @@ import { BrowserModule } from '@angular/platform-browser';
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
   ],
+  providers: [UpdateService],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

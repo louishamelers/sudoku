@@ -5,7 +5,11 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class UpdateService {
   constructor(private readonly updates: SwUpdate) {
-    this.updates.available.subscribe((event) => {
+    console.log('updates...');
+
+    this.updates.versionUpdates.subscribe((event) => {
+      console.log(event);
+
       this.showAppUpdateAlert();
     });
   }
