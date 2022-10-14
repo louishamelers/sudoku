@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1665785627151,
+  "timestamp": 1665785786883,
   "index": "/sudoku-app/index.html",
   "assetGroups": [
     {
@@ -12,14 +12,14 @@
       },
       "urls": [
         "/sudoku-app/387.6c91789388e94507.js",
-        "/sudoku-app/937.0e12d8c08e8074e6.js",
+        "/sudoku-app/937.bef0c23e7a68f3c2.js",
         "/sudoku-app/favicon.ico",
         "/sudoku-app/index.html",
         "/sudoku-app/main.c29d8d154e89014f.js",
         "/sudoku-app/manifest.webmanifest",
         "/sudoku-app/polyfills.a1e44b390d8b54b7.js",
-        "/sudoku-app/runtime.be8d61651fb4ad72.js",
-        "/sudoku-app/styles.f9d3bf7558e085bf.css"
+        "/sudoku-app/runtime.b9f8a562a87ec313.js",
+        "/sudoku-app/styles.94c654ad0e8e0250.css"
       ],
       "patterns": []
     },
@@ -46,7 +46,7 @@
   "dataGroups": [],
   "hashTable": {
     "/sudoku-app/387.6c91789388e94507.js": "14eb6fcd5181f2c793e9d5939d3fd5c931135dc8",
-    "/sudoku-app/937.0e12d8c08e8074e6.js": "9b447f2f4f8b57e67c9969b7276a9651a81dc91b",
+    "/sudoku-app/937.bef0c23e7a68f3c2.js": "ccb00e8295617bc8bbe4f64cbaa83e38789701bf",
     "/sudoku-app/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "/sudoku-app/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "/sudoku-app/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
@@ -56,12 +56,12 @@
     "/sudoku-app/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/sudoku-app/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/sudoku-app/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/sudoku-app/index.html": "2813373c9c5da287a6eb0ec1104283e260d07b7c",
+    "/sudoku-app/index.html": "f72d384df5c015bfb7af5c65824366ac0c9800d1",
     "/sudoku-app/main.c29d8d154e89014f.js": "a7e795118c6f14d989d578d8716dffd5582dd31b",
     "/sudoku-app/manifest.webmanifest": "431970c3643388ffe543c79b38df9bfbca81ab4d",
     "/sudoku-app/polyfills.a1e44b390d8b54b7.js": "3d2500554578594e2e2f5dc4581a13b7f2609a5f",
-    "/sudoku-app/runtime.be8d61651fb4ad72.js": "a1b94468621079424590a31f18ca74ff6303a0f8",
-    "/sudoku-app/styles.f9d3bf7558e085bf.css": "8becd36a8e74a62e2c617beefb11337cd4719107"
+    "/sudoku-app/runtime.b9f8a562a87ec313.js": "cab45f5620718be376109af44bff17bfc0669df3",
+    "/sudoku-app/styles.94c654ad0e8e0250.css": "7d8615e38b2d0e3559df381c07c7f3e7b563bac5"
   },
   "navigationUrls": [
     {
