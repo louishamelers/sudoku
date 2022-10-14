@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  debugKey: '',
+  debugKey: 'game-board',
   puzzleSize: 9,
   maxErrors: 3,
 };

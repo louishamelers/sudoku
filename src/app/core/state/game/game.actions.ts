@@ -7,6 +7,7 @@ export const gameWon = createAction('[GAME - app] game won');
 export const gameLose = createAction('[GAME - app] game lost');
 export const loadNewGame = createAction('[GAME - app] load new game', props<{ difficulty: Difficulty; board: Board }>());
 export const detectedIncorrectAnswer = createAction('[GAME - app] detected incorrect answer');
+export const addSecond = createAction('[GAME - app] add second to gameTime');
 
 export const setActiveCell = createAction('[GAME - user] set active cell', props<{ cell: Cell | null }>());
 export const setValue = createAction('[GAME - user] set value', props<{ value: number }>());

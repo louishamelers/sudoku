@@ -7,6 +7,7 @@ export const selectGameBoard = createSelector(selectGameState, (gameState: GameS
 export const selectGameActiveCell = createSelector(selectGameState, (gameState) => gameState.activeCell);
 export const selectGameDifficulty = createSelector(selectGameState, (gameState) => gameState.difficulty);
 export const selectErrors = createSelector(selectGameState, (gameState) => gameState.errors);
+export const selectGameTime = createSelector(selectGameState, (gameState) => gameState.timeInSeconds);
 
 export const selectActiveFieldCell = createSelector(selectGameBoard, selectGameActiveCell, (board, activeCell): FieldCell | null =>
   board && activeCell && activeCell.row !== null && activeCell.col !== null ? { ...board[activeCell.row][activeCell.col], ...activeCell } : null,

@@ -11,7 +11,11 @@
         >
       </div>
     </div>
-    <div class="mb-7"><app-board></app-board></div>
+    <div class="mb-2"><app-board></app-board></div>
+    <div *ngIf="time$ | async as time" class="text-gray-600 uppercase text-xs mb-7 flex flex-row-reverse">
+      <span>{{ time.value | gameTime }}</span>
+      <span class="material-icons-outlined text-xs mr-1 text-gray-600"> timer </span>
+    </div>
     <div><app-input></app-input></div>
   </div>
   <button class="rounded-md border border-gray-100 text-gray-500 flex items-center justify-center h-12" routerLink="../">
