@@ -27,6 +27,7 @@ export class UpdateService {
     // console.log('there is an update ready!');
   }
   doAppUpdate() {
+    // this might or might not work actually...
     this.updates.activateUpdate().then(() => document.location.reload());
   }
 }
