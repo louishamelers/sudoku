@@ -12,8 +12,6 @@ export class UpdateService {
       if (event.type === 'VERSION_READY') {
         this.showAppUpdateAlert();
       }
-
-      this.showAppUpdateAlert();
     });
   }
   showAppUpdateAlert() {
