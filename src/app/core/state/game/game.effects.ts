@@ -23,7 +23,7 @@ export class GameEffects {
         const loseGame = wrongAnswer ? errors + 1 >= maxErrors : false;
 
         return concat([
-          setBoard({ board: updatedBoard }),
+          ...(updatedBoard ? [setBoard({ board: updatedBoard })] : []),
           ...(wrongAnswer ? [detectedIncorrectAnswer()] : []),
           ...(complete ? [gameWon()] : []),
           ...(loseGame ? [gameLose()] : []),
