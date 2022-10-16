@@ -14,6 +14,7 @@ import { gameReducer } from './state/game/game.reducer';
 import { GameEffects } from './state/game/game.effects';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpdateService } from './services/update/update.service';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 /**
  * CoreModule, must be imported only by root module.
@@ -23,6 +24,7 @@ import { UpdateService } from './services/update/update.service';
   imports: [
     CommonModule,
     BrowserModule,
+    OverlayModule,
     StoreModule.forRoot({ gameState: gameReducer }),
     EffectsModule.forRoot([GameEffects]),
     // Instrumentation must be imported after importing StoreModule (config is optional)

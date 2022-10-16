@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { startNewGame } from 'src/app/core/state/game/game.actions';
+import { InputComponent } from 'src/app/modules/game/components/input/input.component';
 import { Difficulty } from 'src/app/shared/models/difficulty.model';
 
 @Component({
@@ -9,9 +11,11 @@ import { Difficulty } from 'src/app/shared/models/difficulty.model';
   styleUrls: ['./difficulty-picker.component.scss'],
 })
 export class DifficultyPickerComponent {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private dialogService: DialogService) {}
 
   onNewGameClick(difficulty: Difficulty) {
-    this.store.dispatch(startNewGame({ difficulty }));
+    this.dialogService.open(InputComponent);
+
+    // this.store.dispatch(startNewGame({ difficulty }));
   }
 }
