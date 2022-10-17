@@ -3,7 +3,23 @@
 }
 
 .cell {
-  @apply bg-white relative cursor-pointer border border-gray-200 text-gray-600;
+  @apply bg-white relative cursor-pointer border border-gray-300 text-gray-600;
+
+  &.top {
+    @apply border-t-gray-400;
+  }
+
+  &.bottom {
+    @apply border-b-gray-400;
+  }
+
+  &.left {
+    @apply border-l-gray-400;
+  }
+
+  &.right {
+    @apply border-r-gray-400;
+  }
 
   &.highlight {
     @apply bg-gray-100;
@@ -19,22 +35,6 @@
 
   &.active {
     @apply bg-blue-200 border-blue-300;
-  }
-
-  &.top {
-    @apply border border-t-gray-300;
-  }
-
-  &.bottom {
-    @apply border border-b-gray-300;
-  }
-
-  &.left {
-    @apply border border-l-gray-300;
-  }
-
-  &.right {
-    @apply border border-r-gray-300;
   }
 
   .value {
