@@ -1,1 +1,32 @@
-<app-difficulty-picker></app-difficulty-picker>
+<div class="flex flex-col justify-center items-center w-screen">
+  <span class="flex mb-8 mt-12">
+    <h1 class="text-3xl">Sudoku</h1>
+    <small class="text-xs">TM</small>
+  </span>
+  <div class="flex flex-col">
+    <button
+      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
+      (click)="onNewGameClick('easy')"
+    >
+      easy
+    </button>
+    <button
+      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
+      (click)="onNewGameClick('medium')"
+    >
+      medium
+    </button>
+    <button
+      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
+      (click)="onNewGameClick('hard')"
+    >
+      hard
+    </button>
+    <button
+      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
+      (click)="onNewGameClick('expert')"
+    >
+      expert
+    </button>
+  </div>
+</div>
