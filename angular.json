@@ -33,7 +33,8 @@
             "styles": ["src/styles.scss"],
             "scripts": [],
             "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "ngswConfigPath": "ngsw-config.json",
+            "allowedCommonJsDependencies": ["sudoku-gen"]
           },
           "configurations": {
             "production": {
