@@ -14,9 +14,10 @@ export class UpdateService {
       }
     });
   }
+
   showAppUpdateAlert() {
-    if (confirm('Are you sure to delete ')) {
-      this.doAppUpdate;
+    if (confirm("There's an update ready, update now?")) {
+      this.doAppUpdate();
     }
     // const header = 'App Update available';
     // const message = 'Choose Ok to update';
@@ -26,8 +27,12 @@ export class UpdateService {
     // // presentAlert(header, message, action, caller);
     // console.log('there is an update ready!');
   }
+
   doAppUpdate() {
     // this might or might not work actually...
-    this.updates.activateUpdate().then(() => document.location.reload());
+    this.updates.activateUpdate().then((e) => {
+      console.log('update installed...');
+      document.location.reload();
+    });
   }
 }
