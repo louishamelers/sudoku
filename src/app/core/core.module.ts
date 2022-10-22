@@ -1,14 +1,17 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-//ngrx
+// Firestoree';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
+// NGRX
 import { StoreModule } from '@ngrx/store';
 // import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from 'src/environments/environment';
-import { ModuleLoadsOnceGuard } from '../shared/util/module-loads-once.guard';
 
 import { gameReducer } from './state/game/game.reducer';
 import { GameEffects } from './state/game/game.effects';
@@ -23,9 +26,14 @@ import { UpdateService } from './services/update/update.service';
   imports: [
     CommonModule,
     BrowserModule,
+
+    // Firestore
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+
+    // NGRX - Instrumentation must be imported after importing StoreModule (config is optional)
     StoreModule.forRoot({ gameState: gameReducer }),
     EffectsModule.forRoot([GameEffects]),
-    // Instrumentation must be imported after importing StoreModule (config is optional)
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode

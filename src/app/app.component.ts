@@ -8,5 +8,5 @@ import { UpdateService } from './core/services/update/update.service';
 export class AppComponent {
   title = 'sudoku-app';
 
-  constructor(private updateService: UpdateService) {}
+  constructor(_updateService: UpdateService) {}
 }
