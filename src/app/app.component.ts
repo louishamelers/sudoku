@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NetworkService } from './core/services/network/network.service';
 import { UpdateService } from './core/services/update/update.service';
 
 @Component({
@@ -8,5 +9,7 @@ import { UpdateService } from './core/services/update/update.service';
 export class AppComponent {
   title = 'sudoku-app';
 
-  constructor(_updateService: UpdateService) {}
+  constructor(_updateService: UpdateService, _networkService: NetworkService) {
+    _networkService.networkStatus$.subscribe((e) => console.log(e));
+  }
 }
