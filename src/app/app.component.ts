@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DailyGameService } from './core/services/daily-game/daily-game.service';
+import { DailyGameService } from './core/services/daily/daily.service';
 import { UpdateService } from './core/services/update/update.service';
 
 @Component({

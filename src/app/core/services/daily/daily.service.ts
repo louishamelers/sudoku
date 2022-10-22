@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, setDoc, doc, onSnapshot, DocumentData } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { GameData } from 'src/app/shared/models/game.model';
-import { documentDataToGameData } from './daily-game.mapper';
+import { documentDataToGameData } from './daily.mapper';
 
 @Injectable({
   providedIn: 'root',
