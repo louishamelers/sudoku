@@ -14,3 +14,4 @@ export const setActiveCell = createAction('[GAME - user] set active cell', props
 export const setValue = createAction('[GAME - user] set value', props<{ value: number }>());
 export const clearValue = createAction('[GAME - user] Clear value');
 export const startNewGame = createAction('[GAME - user] start new game', props<{ difficulty: Difficulty }>());
+export const startDailyGame = createAction('[GAME - user] start daily game');

@@ -2,10 +2,22 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concat, map, of, switchMap, tap } from 'rxjs';
+import { concat, filter, map, of, switchMap, tap } from 'rxjs';
+import { isNotNullOrUndefined } from 'src/app/shared/util/filter-typeguard';
 import { environment } from 'src/environments/environment';
+import { DailyService } from '../../services/daily/daily.service';
 import { GameService } from '../../services/game/game.service';
-import { clearValue, detectedIncorrectAnswer, gameLose, gameWon, loadNewGame, setBoard, setValue, startNewGame } from './game.actions';
+import {
+  clearValue,
+  detectedIncorrectAnswer,
+  gameLose,
+  gameWon,
+  loadNewGame,
+  setBoard,
+  setValue,
+  startDailyGame,
+  startNewGame,
+} from './game.actions';
 import { selectActiveFieldCell, selectErrors, selectGameBoard } from './game.selectors';
 
 const maxErrors = environment.maxErrors;
@@ -42,7 +54,14 @@ export class GameEffects {
     this.actions$.pipe(
       ofType(startNewGame),
       switchMap(({ difficulty }) => of(loadNewGame(this.boardService.generateGameData(difficulty)))),
-      map((e) => e),
+    ),
+  );
+  startDailyGame$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(startDailyGame),
+      switchMap(() => this.dailyService.dailyGameData$),
+      filter(isNotNullOrUndefined),
+      map((gameData) => loadNewGame(gameData)),
     ),
   );
   goToNewGame$ = createEffect(
@@ -70,5 +89,11 @@ export class GameEffects {
     { dispatch: false },
   );
 
-  constructor(private store: Store, private actions$: Actions, private boardService: GameService, private router: Router) {}
+  constructor(
+    private store: Store,
+    private actions$: Actions,
+    private boardService: GameService,
+    private dailyService: DailyService,
+    private router: Router,
+  ) {}
 }
