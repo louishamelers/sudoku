@@ -26,7 +26,7 @@ export class GameService {
     );
   }
 
-  generateGameData(difficulty: Difficulty | undefined): GameData {
+  generateGameData(difficulty?: Difficulty): GameData {
     const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
 
     const sudokuGen = getSudoku(difficulty);

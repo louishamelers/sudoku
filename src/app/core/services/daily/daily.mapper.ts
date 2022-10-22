@@ -12,3 +12,10 @@ export function documentDataToGameData(dd: DocumentData): GameData | null {
     board: JSON.parse(board),
   };
 }
+
+export function gameDataToDocumentData(gameData: GameData): DocumentData {
+  return {
+    difficulty: gameData.difficulty,
+    board: JSON.stringify(gameData.board),
+  };
+}
