@@ -1,4 +1,4 @@
 {
-  "cSpell.words": ["ngrx"],
+  "cSpell.words": ["Firestore", "ngrx"],
   "scss.lint.unknownAtRules": "ignore"
 }

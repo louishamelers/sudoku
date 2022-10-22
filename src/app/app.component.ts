@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DailyGameService } from './core/services/daily-game/daily-game.service';
 import { UpdateService } from './core/services/update/update.service';
 
 @Component({
@@ -8,5 +9,5 @@ import { UpdateService } from './core/services/update/update.service';
 export class AppComponent {
   title = 'sudoku-app';
 
-  constructor(private updateService: UpdateService) {}
+  constructor(_updateService: UpdateService, _dailyGameService: DailyGameService) {}
 }
