@@ -1,11 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Cell, Board } from 'src/app/shared/models/board.model';
+import { GameData } from 'src/app/shared/models/game.model';
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 
 export const setBoard = createAction('[GAME - app] set board', props<{ board: Board | null }>());
 export const gameWon = createAction('[GAME - app] game won');
 export const gameLose = createAction('[GAME - app] game lost');
-export const loadNewGame = createAction('[GAME - app] load new game', props<{ difficulty: Difficulty; board: Board }>());
+export const loadNewGame = createAction('[GAME - app] load new game', props<GameData>());
 export const detectedIncorrectAnswer = createAction('[GAME - app] detected incorrect answer');
 export const addSecond = createAction('[GAME - app] add second to gameTime');
 

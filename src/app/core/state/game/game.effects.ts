@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concat, concatAll, map, of, switchMap, tap } from 'rxjs';
+import { concat, map, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { BoardService } from '../../services/board/board.service';
+import { GameService } from '../../services/game/game.service';
 import { clearValue, detectedIncorrectAnswer, gameLose, gameWon, loadNewGame, setBoard, setValue, startNewGame } from './game.actions';
 import { selectActiveFieldCell, selectErrors, selectGameBoard } from './game.selectors';
 
@@ -41,14 +41,7 @@ export class GameEffects {
   startNewGame$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startNewGame),
-      switchMap(({ difficulty }) =>
-        of(
-          loadNewGame({
-            difficulty,
-            board: this.boardService.generateBoard(difficulty),
-          }),
-        ),
-      ),
+      switchMap(({ difficulty }) => of(loadNewGame(this.boardService.generateGameData(difficulty)))),
       map((e) => e),
     ),
   );
@@ -77,5 +70,5 @@ export class GameEffects {
     { dispatch: false },
   );
 
-  constructor(private store: Store, private actions$: Actions, private boardService: BoardService, private router: Router) {}
+  constructor(private store: Store, private actions$: Actions, private boardService: GameService, private router: Router) {}
 }

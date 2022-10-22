@@ -4,13 +4,12 @@ import { getSudoku } from 'sudoku-gen';
 import { environment } from 'src/environments/environment';
 import { Board, FieldCell } from 'src/app/shared/models/board.model';
 import { Difficulty } from 'src/app/shared/models/difficulty.model';
+import { GameData } from 'src/app/shared/models/game.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BoardService {
-  constructor() {}
-
+export class GameService {
   setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | null {
     if (!board || !activeFieldCell || activeFieldCell.readonly) return board;
 
@@ -27,12 +26,14 @@ export class BoardService {
     );
   }
 
-  generateBoard(difficulty: Difficulty): Board {
+  generateGameData(difficulty: Difficulty | undefined): GameData {
     const board: Board = [...Array(environment.puzzleSize)].map(() => Array(environment.puzzleSize));
 
-    const rawSudoku = getSudoku(difficulty);
-    const rawPuzzle = Array.from(rawSudoku.puzzle);
-    const rawSolution = Array.from(rawSudoku.solution);
+    const sudokuGen = getSudoku(difficulty);
+    const difficultyGen = sudokuGen.difficulty;
+
+    const rawPuzzle = Array.from(sudokuGen.puzzle);
+    const rawSolution = Array.from(sudokuGen.solution);
 
     rawPuzzle.forEach((rawValue, index) => {
       // '~~' is faster than Math.floor()
@@ -49,7 +50,10 @@ export class BoardService {
       };
     });
 
-    return board;
+    return {
+      difficulty: difficultyGen,
+      board,
+    };
   }
 
   isComplete(board: Board | null): boolean {
