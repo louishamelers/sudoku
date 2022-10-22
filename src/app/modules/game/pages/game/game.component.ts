@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { interval, map, Subject, takeUntil } from 'rxjs';
+import { combineLatest, filter, interval, map, Subject, takeUntil, tap, withLatestFrom } from 'rxjs';
 import { addSecond } from 'src/app/core/state/game/game.actions';
-import { selectErrors, selectGameDifficulty, selectGameTime } from 'src/app/core/state/game/game.selectors';
+import { selectErrors, selectGameDate, selectGameDifficulty, selectGameTime, selectGameTitle } from 'src/app/core/state/game/game.selectors';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,7 +11,15 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnDestroy, OnInit {
-  gameDifficulty$ = this.store.select(selectGameDifficulty);
+  gameTitle$ = combineLatest([this.store.select(selectGameDifficulty), this.store.select(selectGameTitle)]).pipe(
+    tap((e) => console.log(e)),
+    map(([difficulty, title]) => title ?? difficulty),
+  );
+  gameDate$ = this.store.select(selectGameDate).pipe(
+    withLatestFrom(this.gameTitle$),
+    filter(([, title]) => title?.toLowerCase() === 'daily sudoku'),
+    map(([date]) => date),
+  );
   mistakes$ = this.store.select(selectErrors).pipe(map((mistakes) => ({ value: mistakes })));
   time$ = this.store.select(selectGameTime).pipe(map((gameTime) => ({ value: gameTime })));
   destroy$ = new Subject<void>();

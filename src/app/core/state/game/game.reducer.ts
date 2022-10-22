@@ -5,6 +5,7 @@ import { addSecond, detectedIncorrectAnswer, loadNewGame, setActiveCell, setBoar
 const initialState: Game = {
   difficulty: null,
   board: null,
+  date: null,
   activeCell: null,
   errors: 0,
   timeInSeconds: 0,
@@ -12,7 +13,15 @@ const initialState: Game = {
 
 export const gameReducer = createReducer<Game>(
   initialState,
-  on(loadNewGame, (_state, { board, difficulty }) => ({ board, difficulty, activeCell: null, errors: 0, timeInSeconds: 0 })),
+  on(loadNewGame, (_state, { board, difficulty, date, title }) => ({
+    board,
+    difficulty,
+    date,
+    title,
+    activeCell: null,
+    errors: 0,
+    timeInSeconds: 0,
+  })),
   on(setActiveCell, (state, { cell }) => ({ ...state, activeCell: cell })),
   on(setBoard, (state, { board }) => ({ ...state, board })),
   on(detectedIncorrectAnswer, (state, {}) => ({ ...state, errors: state.errors + 1 })),

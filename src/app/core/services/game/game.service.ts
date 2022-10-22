@@ -53,6 +53,7 @@ export class GameService {
     return {
       difficulty: difficultyGen,
       board,
+      date: new Date(),
     };
   }
 

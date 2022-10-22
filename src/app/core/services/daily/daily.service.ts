@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firestore, setDoc, doc, onSnapshot, DocumentData } from '@angular/fire/firestore';
-import { filter, from, map, Observable, of, startWith, tap, withLatestFrom } from 'rxjs';
+import { Firestore, setDoc, doc, onSnapshot, DocumentData, enableIndexedDbPersistence } from '@angular/fire/firestore';
+import { filter, from, map, mapTo, Observable, of, startWith, tap, withLatestFrom } from 'rxjs';
 import { GameData } from 'src/app/shared/models/game.model';
 import { GameService } from '../game/game.service';
 import { NetworkService } from '../network/network.service';
@@ -20,10 +20,12 @@ export class DailyService {
     startWith(null),
   );
 
-  constructor(private store: Firestore, private gameService: GameService, private networkService: NetworkService) {}
+  constructor(private store: Firestore, private gameService: GameService, private networkService: NetworkService) {
+    enableIndexedDbPersistence(store);
+  }
 
   private selectTodaysDaily(): Observable<GameData | null> {
-    return this.selectDaily(new Date().toISOString().split('T')[0]);
+    return this.selectDaily(new Date().toLocaleDateString('sv'));
   }
 
   private selectDaily(dateString: string): Observable<GameData | null> {
@@ -41,7 +43,7 @@ export class DailyService {
 
   private setDaily(): void {
     const gameData = this.gameService.generateGameData();
-    const dateString = new Date().toISOString().split('T')[0];
-    setDoc(doc(this.store, 'daily', dateString), gameDataToDocumentData(gameData));
+    const dateString = new Date().toLocaleDateString('sv');
+    setDoc(doc(this.store, 'daily', dateString), gameDataToDocumentData({ ...gameData, title: 'Daily sudoku' }));
   }
 }

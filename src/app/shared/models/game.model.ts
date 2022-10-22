@@ -5,6 +5,7 @@ export interface GameData {
   title?: string | null;
   difficulty: Difficulty | null;
   board: Board | null;
+  date: Date | null;
 }
 
 export interface GameState {

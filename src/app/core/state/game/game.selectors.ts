@@ -6,6 +6,8 @@ export const selectGameState = createFeatureSelector<Game>('gameState');
 export const selectGameBoard = createSelector(selectGameState, (gameState: Game) => gameState.board);
 export const selectGameActiveCell = createSelector(selectGameState, (gameState) => gameState.activeCell);
 export const selectGameDifficulty = createSelector(selectGameState, (gameState) => gameState.difficulty);
+export const selectGameDate = createSelector(selectGameState, (gameState) => gameState.date);
+export const selectGameTitle = createSelector(selectGameState, (gameState) => gameState.title);
 export const selectErrors = createSelector(selectGameState, (gameState) => gameState.errors);
 export const selectGameTime = createSelector(selectGameState, (gameState) => gameState.timeInSeconds);
 
