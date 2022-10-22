@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Board, FieldCell } from 'src/app/shared/models/board.model';
-import { GameState } from './game.reducer';
+import { Game } from 'src/app/shared/models/game.model';
 
-export const selectGameState = createFeatureSelector<GameState>('gameState');
-export const selectGameBoard = createSelector(selectGameState, (gameState: GameState) => gameState.board);
+export const selectGameState = createFeatureSelector<Game>('gameState');
+export const selectGameBoard = createSelector(selectGameState, (gameState: Game) => gameState.board);
 export const selectGameActiveCell = createSelector(selectGameState, (gameState) => gameState.activeCell);
 export const selectGameDifficulty = createSelector(selectGameState, (gameState) => gameState.difficulty);
 export const selectErrors = createSelector(selectGameState, (gameState) => gameState.errors);

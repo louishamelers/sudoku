@@ -2,16 +2,14 @@ import { Injectable } from '@angular/core';
 import { getSudoku } from 'sudoku-gen';
 
 import { environment } from 'src/environments/environment';
-import { Store } from '@ngrx/store';
 import { Board, FieldCell } from 'src/app/shared/models/board.model';
 import { Difficulty } from 'src/app/shared/models/difficulty.model';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardService {
-  constructor(private store: Store) {}
+  constructor() {}
 
   setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | null {
     if (!board || !activeFieldCell || activeFieldCell.readonly) return board;
