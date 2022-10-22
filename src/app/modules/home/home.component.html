@@ -3,13 +3,14 @@
     <h1 class="text-3xl">Sudoku</h1>
     <small class="text-xs">TM</small>
   </span>
-  <div *ngIf="dailyService.dailyGameData$ | async as dailyGame">
+  <div *ngIf="dailyService.dailyGameData$ | async as dailyGame" class="pb-2">
     <button
-      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
+      class="h-16 w-44 m-2 mb-4 rounded-md border border-blue-300 disabled:border-blue-100 disabled:text-blue-300 bg-blue-50 text-blue-600"
       (click)="onDailyGameClick()"
     >
       daily
     </button>
+    <hr />
   </div>
   <div class="flex flex-col">
     <button
