@@ -11,7 +11,7 @@
       </div>
       <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
         <span class="text-gray-600 uppercase text-xs">mistakes:</span>
-        <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes - 1"
+        <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes"
           >{{ mistakes.value }}/{{ maxMistakes }}</span
         >
       </div>

@@ -38,7 +38,7 @@ export class GameEffects {
           setBoard({ board: updatedBoard }),
           ...(wrongAnswer ? [detectedIncorrectAnswer()] : []),
           ...(complete ? [gameWon()] : []),
-          ...(loseGame ? [gameLose()] : []),
+          // ...(loseGame ? [gameLose()] : []),
         ]);
       }),
     ),
