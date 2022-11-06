@@ -7,20 +7,8 @@ import { isNotNullOrUndefined } from 'src/app/shared/util/filter-typeguard';
 import { environment } from 'src/environments/environment';
 import { DailyService } from '../../services/daily/daily.service';
 import { GameService } from '../../services/game/game.service';
-import {
-  clearValue,
-  detectedIncorrectAnswer,
-  gameLose,
-  gameWon,
-  loadNewGame,
-  setBoard,
-  setValue,
-  startDailyGame,
-  startNewGame,
-} from './game.actions';
+import { clearValue, detectedIncorrectAnswer, gameWon, loadNewGame, setBoard, setValue, startDailyGame, startNewGame } from './game.actions';
 import { selectActiveFieldCell, selectErrors, selectGameBoard } from './game.selectors';
-
-const maxErrors = environment.maxErrors;
 
 @Injectable()
 export class GameEffects {
@@ -32,14 +20,8 @@ export class GameEffects {
         const updatedBoard = this.boardService.setCellValue(value, board, activeFieldCell);
         const wrongAnswer = activeFieldCell && activeFieldCell?.answer !== value && activeFieldCell?.value !== value && !activeFieldCell.readonly;
         const complete = this.boardService.isComplete(updatedBoard);
-        const loseGame = wrongAnswer ? errors + 1 >= maxErrors : false;
 
-        return concat([
-          setBoard({ board: updatedBoard }),
-          ...(wrongAnswer ? [detectedIncorrectAnswer()] : []),
-          ...(complete ? [gameWon()] : []),
-          // ...(loseGame ? [gameLose()] : []),
-        ]);
+        return concat([setBoard({ board: updatedBoard }), ...(wrongAnswer ? [detectedIncorrectAnswer()] : []), ...(complete ? [gameWon()] : [])]);
       }),
     ),
   );
@@ -77,14 +59,6 @@ export class GameEffects {
       this.actions$.pipe(
         ofType(gameWon),
         tap(() => this.router.navigate(['/', 'game', 'winner'])),
-      ),
-    { dispatch: false },
-  );
-  loseGame$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(gameLose),
-        tap(() => this.router.navigate(['/', 'game', 'loser'])),
       ),
     { dispatch: false },
   );

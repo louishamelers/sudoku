@@ -7,11 +7,10 @@ import { ROUTES } from './game.routes';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { GameComponent } from './pages/game/game.component';
 import { WinComponent } from './pages/win/win.component';
-import { LoseComponent } from './pages/lose/lose.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ROUTES), SharedModule],
-  declarations: [BoardComponent, GameComponent, InputComponent, WinComponent, LoseComponent],
+  declarations: [BoardComponent, GameComponent, InputComponent, WinComponent],
   exports: [GameComponent],
 })
 export class GameModule {}

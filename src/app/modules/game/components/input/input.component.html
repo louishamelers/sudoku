@@ -1,13 +1,13 @@
 <div *ngIf="usedNumbers$ | async as usedNumbers" class="grid gap-4 select-none grid-cols-5 items-stretch">
   <button
-    class="h-12 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
+    class="h-12 rounded-md contr-border"
     *ngFor="let val of inputValues; let i = index"
     (click)="onInputClick(val)"
     [disabled]="usedNumbers[i] === 9"
   >
     <span>{{ val }}</span>
   </button>
-  <button class="h-12 rounded-md border border-red-300 bg-red-50" (click)="onClearClick()">
-    <span class="material-icons text-s text-red-400 mt-1"> delete </span>
+  <button class="h-12 rounded-md contr-red-border" (click)="onClearClick()">
+    <span class="material-icons text-s mt-1"> delete </span>
   </button>
 </div>

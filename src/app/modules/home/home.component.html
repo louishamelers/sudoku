@@ -1,18 +1,13 @@
-<div class="flex flex-col justify-center items-center w-screen">
+<div class="flex flex-col justify-center items-center w-screen h-screen dark:bg-zinc-900">
   <span class="flex mb-8 mt-12">
-    <h1 class="text-3xl">Sudoku</h1>
-    <small class="text-xs">TM</small>
+    <h1 class="text-3xl dark:text-gray-50">Sudoku</h1>
+    <small class="text-xs dark:text-white">TM</small>
   </span>
-  <div class="bg-gray-50 border mb-4 border-gray-200 rounded-md p-6 flex flex-col">
+  <div class="mb-4 p-6 flex flex-col contr-border rounded-md">
     <ng-container *ngIf="dailyService.dailyGameData$ | async as dailyGame; else loading">
-      <span class="text-gray-600">{{ dailyGame.title }}</span>
-      <span class="text-gray-400 text-sm mb-3">{{ dailyGame.date | date: 'yyyy-MM-dd' }}</span>
-      <button
-        class="h-14 w-36 rounded-md border border-blue-300 disabled:border-blue-100 disabled:text-blue-300 bg-blue-50 text-blue-600"
-        (click)="onDailyGameClick()"
-      >
-        play
-      </button>
+      <span class="text-gray-600 dark:text-gray-50">{{ dailyGame.title }}</span>
+      <span class="text-gray-400 text-sm mb-3 dark:text-gray-50">{{ dailyGame.date | date: 'yyyy-MM-dd' }}</span>
+      <button class="h-14 w-36 rounded-md contr-blue-border" (click)="onDailyGameClick()">play</button>
     </ng-container>
     <ng-template #loading>
       <div class="flex items-center justify-center">
@@ -32,29 +27,9 @@
     </ng-template>
   </div>
   <div class="flex flex-col">
-    <button
-      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
-      (click)="onNewGameClick('easy')"
-    >
-      easy
-    </button>
-    <button
-      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
-      (click)="onNewGameClick('medium')"
-    >
-      medium
-    </button>
-    <button
-      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
-      (click)="onNewGameClick('hard')"
-    >
-      hard
-    </button>
-    <button
-      class="h-12 w-32 m-2 rounded-md border border-gray-300 disabled:border-gray-100 disabled:text-gray-300 bg-gray-50 text-gray-600"
-      (click)="onNewGameClick('expert')"
-    >
-      expert
-    </button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('easy')">easy</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('medium')">medium</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('hard')">hard</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('expert')">expert</button>
   </div>
 </div>
