@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1666712785526,
+  "timestamp": 1667748447201,
   "index": "/sudoku/index.html",
   "assetGroups": [
     {
@@ -36,6 +36,7 @@
         "/sudoku/assets/icons/icon-152x152.png",
         "/sudoku/assets/icons/icon-192x192.png",
         "/sudoku/assets/icons/icon-384x384.png",
+        "/sudoku/assets/icons/icon-48x48.png",
         "/sudoku/assets/icons/icon-512x512.png",
         "/sudoku/assets/icons/icon-72x72.png",
         "/sudoku/assets/icons/icon-96x96.png"
@@ -47,14 +48,15 @@
   "hashTable": {
     "/sudoku/387.e43a8cfa6e2ade38.js": "6f6ebaa41b645b236e6f753ca62133c10c07acf4",
     "/sudoku/651.7919c52ec157cfa6.js": "47e5eaa4d92d064ed1ea9e2f20ff3f21851bb125",
-    "/sudoku/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
-    "/sudoku/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
-    "/sudoku/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
-    "/sudoku/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
-    "/sudoku/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
-    "/sudoku/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
-    "/sudoku/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
-    "/sudoku/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/sudoku/assets/icons/icon-128x128.png": "9a0dffbc91f9d19a906a9de57d61b6042cac2a4f",
+    "/sudoku/assets/icons/icon-144x144.png": "67c1b30dee8483b1fb0eb995923560dc4e90efc5",
+    "/sudoku/assets/icons/icon-152x152.png": "f3bf038b054f10f20e1003c23dbf0d52662a84ef",
+    "/sudoku/assets/icons/icon-192x192.png": "a6ca435eae35ce1e056268967be25733220516c1",
+    "/sudoku/assets/icons/icon-384x384.png": "d0dd8b4eaca21d8201e2d0135e62ce0823c4133d",
+    "/sudoku/assets/icons/icon-48x48.png": "c71352644c988da7848ecd13858a6f9d361279e0",
+    "/sudoku/assets/icons/icon-512x512.png": "7780329e8d14448b4d6387b4be5ef9c3eed9ab55",
+    "/sudoku/assets/icons/icon-72x72.png": "1468c1395d9273a1b5cfe52e8ae6ac9b7da1fcab",
+    "/sudoku/assets/icons/icon-96x96.png": "c9f5400f3cbaa1a60c578d2d9f5ec3a95d626089",
     "/sudoku/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
     "/sudoku/index.html": "4dff8fa1c0c6e4c984020fcbfac5676a5f4d5884",
     "/sudoku/main.d5b51901af4785b2.js": "173acf58f69f066047a4e57259c0483c8c2ee7da",
