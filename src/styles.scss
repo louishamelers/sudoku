@@ -5,6 +5,10 @@
 
 @import 'assets/style';
 
+body {
+  @apply dark:bg-zinc-900;
+}
+
 * {
   touch-action: manipulation;
 }

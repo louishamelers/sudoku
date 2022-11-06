@@ -6,19 +6,19 @@
   @apply bg-white dark:bg-zinc-900 relative cursor-pointer border border-gray-300 dark:border-zinc-700 text-gray-600 dark:text-zinc-100;
 
   &.top {
-    @apply border-t-gray-400 dark:border-t-zinc-600;
+    @apply border-t-gray-400 dark:border-t-zinc-500;
   }
 
   &.bottom {
-    @apply border-b-gray-400 dark:border-b-zinc-600;
+    @apply border-b-gray-400 dark:border-b-zinc-500;
   }
 
   &.left {
-    @apply border-l-gray-400 dark:border-l-zinc-600;
+    @apply border-l-gray-400 dark:border-l-zinc-500;
   }
 
   &.right {
-    @apply border-r-gray-400 dark:border-r-zinc-600;
+    @apply border-r-gray-400 dark:border-r-zinc-500;
   }
 
   &.highlight {
