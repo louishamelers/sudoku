@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1667756485403,
+  "timestamp": 1667761200442,
   "index": "/sudoku/index.html",
   "assetGroups": [
     {
@@ -51,15 +51,15 @@
   "hashTable": {
     "/sudoku/105.95d2f61607923ce2.js": "33f08db99b02c4348f207e011063384aa089184c",
     "/sudoku/651.12c7c29319e96a1f.js": "ff45fbb366dac79802cb687984ebb85a0af0d205",
-    "/sudoku/assets/icons/icon-128x128.png": "9a0dffbc91f9d19a906a9de57d61b6042cac2a4f",
-    "/sudoku/assets/icons/icon-144x144.png": "67c1b30dee8483b1fb0eb995923560dc4e90efc5",
-    "/sudoku/assets/icons/icon-152x152.png": "f3bf038b054f10f20e1003c23dbf0d52662a84ef",
-    "/sudoku/assets/icons/icon-192x192.png": "a6ca435eae35ce1e056268967be25733220516c1",
-    "/sudoku/assets/icons/icon-384x384.png": "d0dd8b4eaca21d8201e2d0135e62ce0823c4133d",
-    "/sudoku/assets/icons/icon-48x48.png": "c71352644c988da7848ecd13858a6f9d361279e0",
-    "/sudoku/assets/icons/icon-512x512.png": "7780329e8d14448b4d6387b4be5ef9c3eed9ab55",
-    "/sudoku/assets/icons/icon-72x72.png": "1468c1395d9273a1b5cfe52e8ae6ac9b7da1fcab",
-    "/sudoku/assets/icons/icon-96x96.png": "c9f5400f3cbaa1a60c578d2d9f5ec3a95d626089",
+    "/sudoku/assets/icons/icon-128x128.png": "f308eac9c070d8ae38b5d41bb3c87fd214ec1dca",
+    "/sudoku/assets/icons/icon-144x144.png": "0950e2150f248f1aa409bd770a6a9a3a2b1a1a6a",
+    "/sudoku/assets/icons/icon-152x152.png": "9aad1fdd253f671d3baad98898137f59040c2e29",
+    "/sudoku/assets/icons/icon-192x192.png": "1915ccfe2399b0d5677371d3fbd5107cb69d123b",
+    "/sudoku/assets/icons/icon-384x384.png": "f88b3695e418a7b45c50abeaf6f169a2165579f0",
+    "/sudoku/assets/icons/icon-48x48.png": "806365e63a5f92b469c2a5380aebc8a2e5399606",
+    "/sudoku/assets/icons/icon-512x512.png": "93c52c2fc8fc5e004357ecf0076440028341423b",
+    "/sudoku/assets/icons/icon-72x72.png": "ad2b6c7361152b6ddaa242c538df6d613c1ce272",
+    "/sudoku/assets/icons/icon-96x96.png": "a672c0db567234d78520e228990abbd61b208c85",
     "/sudoku/assets/style/contrasts.scss": "8de9fc50525cd75544926d25d52957834bcdf052",
     "/sudoku/assets/style/index.scss": "8a104b684abc807e32c009ea1627d47cbe12f584",
     "/sudoku/assets/style/style.scss": "21c263c7875a412c00cdb105d627d2a055980736",
