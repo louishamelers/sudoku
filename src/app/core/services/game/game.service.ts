@@ -4,7 +4,7 @@ import { getSudoku } from 'sudoku-gen';
 import { environment } from 'src/environments/environment';
 import { Board, FieldCell } from 'src/app/shared/models/board.model';
 import { Difficulty } from 'src/app/shared/models/difficulty.model';
-import { GameData } from 'src/app/shared/models/game.model';
+import { Game, GameData } from 'src/app/shared/models/game.model';
 
 @Injectable({
   providedIn: 'root',
@@ -59,5 +59,23 @@ export class GameService {
 
   isComplete(board: Board | null): boolean {
     return board ? !board?.some((row) => row.some((field) => field.value !== field.answer)) : false;
+  }
+
+  // data-access
+
+  saveGame(game: Game): void {
+    const key = game.date?.getTime().toString() ?? 'lost-games';
+    localStorage.setItem(key, JSON.stringify(game));
+    localStorage.setItem('last-game', key);
+  }
+
+  loadGame(key?: string): Game | null {
+    const gameKey = key ?? localStorage.getItem('last-game');
+    if (!gameKey) return null;
+
+    const gameString = localStorage.getItem(gameKey);
+    if (!gameString) return null;
+
+    return JSON.parse(gameString) as Game;
   }
 }
