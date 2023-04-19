@@ -6,14 +6,31 @@ import { concat, filter, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { isNotNullOrUndefined } from 'src/app/shared/util/filter-typeguard';
 import { DailyService } from '../../services/daily/daily.service';
 import { GameService } from '../../services/game/game.service';
-import { clearValue, detectedIncorrectAnswer, gameWon, loadNewGame, setBoard, setValue, startDailyGame, startNewGame } from './game.actions';
+import {
+  clearValue,
+  detectedIncorrectAnswer,
+  gameWon,
+  loadGame,
+  loadNewGame,
+  setBoard,
+  setValue,
+  startDailyGame,
+  startNewGame,
+} from './game.actions';
 import { selectActiveFieldCell, selectErrors, selectGameBoard, selectGameState } from './game.selectors';
 
 @Injectable()
 export class GameEffects {
-  setBoard$ = createEffect(() => this.store.select(selectGameState).pipe(tap((gameState) => this.gameService.saveGame(gameState))), {
-    dispatch: false,
-  });
+  setBoard$ = createEffect(
+    () =>
+      this.store.select(selectGameState).pipe(
+        tap((e) => console.log(e)),
+        tap((gameState) => this.gameService.saveGame(gameState)),
+      ),
+    {
+      dispatch: false,
+    },
+  );
   setValue$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setValue),
@@ -51,7 +68,7 @@ export class GameEffects {
   goToNewGame$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(loadNewGame),
+        ofType(loadNewGame, loadGame),
         tap(() => this.router.navigate(['/', 'game'])),
       ),
     { dispatch: false },

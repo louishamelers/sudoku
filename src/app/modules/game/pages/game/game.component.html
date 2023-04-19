@@ -6,14 +6,14 @@
           <span class="capitalize text-gray-600 dark:text-gray-50 text-2xl">{{ gameTitle }}</span>
         </ng-container>
         <ng-container *ngIf="gameDate$ | async as gameDate">
-          <span class="text-gray-400 dark:text-gray-200 text-sm">{{ gameDate | date: 'yyyy-MM-dd' }}</span>
+          <span class="text-gray-400 dark:text-gray-200 text-sm">{{ gameDate | date : 'yyyy-MM-dd' }}</span>
         </ng-container>
       </div>
       <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
         <span class="text-gray-600 dark:text-gray-50 uppercase text-xs">mistakes:</span>
-        <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes"
-          >{{ mistakes.value }}/{{ maxMistakes }}</span
-        >
+        <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes">
+          {{ mistakes.value }}/{{ maxMistakes }}
+        </span>
       </div>
     </div>
     <div class="mb-2"><app-board></app-board></div>

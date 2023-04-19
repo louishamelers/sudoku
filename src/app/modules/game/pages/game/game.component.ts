@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
 })
 export class GameComponent implements OnDestroy, OnInit {
   gameTitle$ = combineLatest([this.store.select(selectGameDifficulty), this.store.select(selectGameTitle)]).pipe(
-    tap((e) => console.log(e)),
     map(([difficulty, title]) => title ?? difficulty),
   );
   gameDate$ = this.store.select(selectGameDate).pipe(

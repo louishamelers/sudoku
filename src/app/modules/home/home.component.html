@@ -3,11 +3,26 @@
     <h1 class="text-3xl dark:text-gray-50">Sudoku</h1>
     <small class="text-xs dark:text-white">TM</small>
   </span>
-  <div class="mb-4 p-6 flex flex-col contr-border rounded-md">
-    <ng-container *ngIf="dailyService.dailyGameData$ | async as dailyGame; else loading">
+  <div class="mb-4 p-6 text-sm flex flex-col contr-border rounded-md w-2/3">
+    <ng-container *ngIf="dailyGame$ | async as dailyGame; else loading">
       <span class="text-gray-600 dark:text-gray-50">{{ dailyGame.title }}</span>
-      <span class="text-gray-400 text-sm mb-3 dark:text-gray-50">{{ dailyGame.date | date: 'yyyy-MM-dd' }}</span>
-      <button class="h-14 w-36 rounded-md contr-blue-border" (click)="onDailyGameClick()">play</button>
+      <span class="text-gray-400 mb-3 dark:text-gray-50">{{ dailyGame.date | date : 'yyyy-MM-dd' }}</span>
+      <ng-container *ngIf="dailyGame.saved">
+        <hr class="h-px mb-3 bg-gray-300 border-0 dark:bg-gray-400" />
+        <div class="flex justify-between mb-2">
+          <div class="flex items-center text-xs">
+            <span class="text-gray-600 dark:text-gray-50 uppercase">mistakes:</span>
+            <span class="text-red-500 ease-in-out duration-100 ml-2" [class.warning]="dailyGame.errors >= maxMistakes">
+              {{ dailyGame.errors }}/{{ maxMistakes }}
+            </span>
+          </div>
+          <div class="text-gray-600 dark:text-gray-50 uppercase flex items-center flex-row-reverse text-xs">
+            <span>{{ dailyGame.timeInSeconds | gameTime }}</span>
+            <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-gray-50"> timer </span>
+          </div>
+        </div>
+      </ng-container>
+      <button class="h-14 w-full rounded-md contr-blue-border" (click)="playGame(dailyGame)">{{ dailyGame.saved ? 'continue' : 'play' }}</button>
     </ng-container>
     <ng-template #loading>
       <div class="flex items-center justify-center">

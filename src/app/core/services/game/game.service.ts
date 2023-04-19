@@ -5,11 +5,15 @@ import { environment } from 'src/environments/environment';
 import { Board, FieldCell } from 'src/app/shared/models/board.model';
 import { Difficulty } from 'src/app/shared/models/difficulty.model';
 import { Game, GameData } from 'src/app/shared/models/game.model';
+import { initialState } from '../../state/game/game.reducer';
+import { GameSaveRepository } from './game-save.repository';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
+  constructor(private gameSaveRepository: GameSaveRepository) {}
+
   setCellValue(value: number, board: Board | null, activeFieldCell: FieldCell | null): Board | null {
     if (!board || !activeFieldCell || activeFieldCell.readonly) return board;
 
@@ -64,18 +68,13 @@ export class GameService {
   // data-access
 
   saveGame(game: Game): void {
-    const key = game.date?.getTime().toString() ?? 'lost-games';
-    localStorage.setItem(key, JSON.stringify(game));
-    localStorage.setItem('last-game', key);
+    console.log(game);
+
+    this.gameSaveRepository.saveGame(game);
   }
 
-  loadGame(key?: string): Game | null {
-    const gameKey = key ?? localStorage.getItem('last-game');
-    if (!gameKey) return null;
-
-    const gameString = localStorage.getItem(gameKey);
-    if (!gameString) return null;
-
-    return JSON.parse(gameString) as Game;
+  loadGame(key?: string): Game | undefined {
+    if (!key) return undefined;
+    return this.gameSaveRepository.loadGame(key);
   }
 }
