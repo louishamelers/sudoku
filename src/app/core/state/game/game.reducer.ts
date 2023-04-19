@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import { Game } from 'src/app/shared/models/game.model';
-import { addSecond, detectedIncorrectAnswer, loadNewGame, setActiveCell, setBoard } from './game.actions';
+import { addSecond, detectedIncorrectAnswer, loadGame, loadNewGame, setActiveCell, setBoard } from './game.actions';
 
-const initialState: Game = {
+export const initialState: Game = {
   difficulty: null,
   board: null,
   date: null,
@@ -13,6 +13,7 @@ const initialState: Game = {
 
 export const gameReducer = createReducer<Game>(
   initialState,
+  on(loadGame, (_state, { game }) => game),
   on(loadNewGame, (_state, { board, difficulty, date, title }) => ({
     board,
     difficulty,

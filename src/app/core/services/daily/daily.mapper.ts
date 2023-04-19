@@ -2,8 +2,6 @@ import { DocumentData } from '@angular/fire/firestore';
 import { GameData } from 'src/app/shared/models/game.model';
 
 export function documentDataToGameData(dd: DocumentData): GameData | null {
-  console.log(dd);
-
   const difficulty = dd['difficulty'];
   const board = dd['board'];
   const date = dd['date'];
