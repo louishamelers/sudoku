@@ -21,16 +21,9 @@ import { selectActiveFieldCell, selectErrors, selectGameBoard, selectGameState }
 
 @Injectable()
 export class GameEffects {
-  setBoard$ = createEffect(
-    () =>
-      this.store.select(selectGameState).pipe(
-        tap((e) => console.log(e)),
-        tap((gameState) => this.gameService.saveGame(gameState)),
-      ),
-    {
-      dispatch: false,
-    },
-  );
+  setBoard$ = createEffect(() => this.store.select(selectGameState).pipe(tap((gameState) => this.gameService.saveGame(gameState))), {
+    dispatch: false,
+  });
   setValue$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setValue),

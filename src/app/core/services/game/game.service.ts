@@ -68,8 +68,6 @@ export class GameService {
   // data-access
 
   saveGame(game: Game): void {
-    console.log(game);
-
     this.gameSaveRepository.saveGame(game);
   }
 

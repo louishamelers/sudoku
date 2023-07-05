@@ -37,7 +37,12 @@ export class HomeComponent implements OnInit {
   }
 
   playGame(game: Game): void {
-    this.store.dispatch(loadGame({ game }));
+    const safeGame: Game = {
+      ...game,
+      timeInSeconds: game.timeInSeconds ?? 0,
+      activeCell: null,
+    };
+    this.store.dispatch(loadGame({ game: safeGame }));
   }
 
   onNewGameClick(difficulty: Difficulty): void {
