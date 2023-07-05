@@ -17,7 +17,7 @@
         rowIndex === gameState.activeFieldCell?.row ||
         colIndex === gameState.activeFieldCell?.col
       "
-      [class.highlight-wrong]="field.value !== field.answer"
+      [class.highlight-wrong]="field.value !== field.answer && field.value !== undefined"
       [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"
       [class.active]="gameState.activeFieldCell?.col === colIndex && gameState.activeFieldCell?.row === rowIndex"
       (click)="onFieldClick({ row: rowIndex, col: colIndex })"

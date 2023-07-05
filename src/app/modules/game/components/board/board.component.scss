@@ -30,7 +30,7 @@
   }
 
   &.highlight-wrong {
-    @apply text-red-600 dark:text-red-500;
+    @apply text-red-600 dark:text-red-500 bg-red-50;
   }
 
   &.active {
