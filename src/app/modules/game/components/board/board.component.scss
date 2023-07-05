@@ -3,38 +3,42 @@
 }
 
 .cell {
-  @apply bg-white dark:bg-zinc-900 relative cursor-pointer border border-gray-300 dark:border-zinc-700 text-gray-600 dark:text-zinc-100;
+  @apply bg-white dark:bg-zinc-800 relative cursor-pointer border border-gray-300 dark:border-zinc-700 text-gray-600 dark:text-zinc-400;
 
   &.top {
-    @apply border-t-gray-400 dark:border-t-zinc-500;
+    @apply border-t-gray-400 dark:border-t-zinc-600;
   }
 
   &.bottom {
-    @apply border-b-gray-400 dark:border-b-zinc-500;
+    @apply border-b-gray-400 dark:border-b-zinc-600;
   }
 
   &.left {
-    @apply border-l-gray-400 dark:border-l-zinc-500;
+    @apply border-l-gray-400 dark:border-l-zinc-600;
   }
 
   &.right {
-    @apply border-r-gray-400 dark:border-r-zinc-500;
+    @apply border-r-gray-400 dark:border-r-zinc-600;
   }
 
   &.highlight {
-    @apply bg-gray-100 dark:bg-zinc-800;
+    @apply bg-gray-100 dark:bg-zinc-900;
   }
 
   &.highlight-same {
-    @apply bg-gray-200 dark:bg-zinc-700;
+    @apply bg-gray-200 dark:bg-zinc-950;
   }
 
   &.highlight-wrong {
-    @apply text-red-600 dark:text-red-500 bg-red-50;
+    @apply text-red-600 dark:text-red-100 dark:border-red-700 dark:bg-red-900;
   }
 
   &.active {
-    @apply bg-blue-200 border-blue-300 dark:bg-blue-500 dark:border-blue-800;
+    @apply dark:border-2;
+
+    &.active:not(.highlight-wrong) {
+      @apply bg-blue-200 border-blue-300 dark:bg-blue-900 dark:border-blue-700;
+    }
   }
 
   .value {

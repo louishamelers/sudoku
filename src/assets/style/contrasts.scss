@@ -8,7 +8,7 @@
 }
 
 .contr-blue {
-  @apply text-blue-600 disabled:text-blue-300 bg-blue-50  dark:bg-blue-900  dark:text-blue-50;
+  @apply text-blue-600 disabled:text-blue-300 bg-blue-50  dark:bg-blue-900  dark:text-blue-100;
 
   &-border {
     @extend .contr-blue;
@@ -17,10 +17,10 @@
 }
 
 .contr-red {
-  @apply text-red-600 disabled:text-red-300 bg-red-50  dark:bg-red-700  dark:text-red-100;
+  @apply text-red-600 disabled:text-red-300 bg-red-50  dark:bg-red-900  dark:text-red-100;
 
   &-border {
     @extend .contr-red;
-    @apply border border-red-300 disabled:border-red-100 dark:border-red-600;
+    @apply border border-red-300 disabled:border-red-100 dark:border-red-700;
   }
 }

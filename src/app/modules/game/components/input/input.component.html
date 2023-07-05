@@ -1,6 +1,6 @@
 <div *ngIf="usedNumbers$ | async as usedNumbers" class="grid gap-4 select-none grid-cols-5 items-stretch">
   <button
-    class="h-12 rounded-md contr-border"
+    class="h-12 rounded-md dark:text-zinc-400 contr-border"
     *ngFor="let val of inputValues; let i = index"
     (click)="onInputClick(val)"
     [disabled]="usedNumbers[i] === 9"
