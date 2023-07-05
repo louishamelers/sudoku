@@ -1,24 +1,24 @@
-<div class="flex flex-col justify-center items-center w-screen h-screen dark:bg-zinc-900">
+<div class="flex flex-col justify-center items-center w-screen h-screen dark:bg-zinc-800">
   <span class="flex mb-8 mt-12">
-    <h1 class="text-3xl dark:text-gray-50">Sudoku</h1>
-    <small class="text-xs dark:text-white">TM</small>
+    <h1 class="text-3xl dark:text-zinc-400">Sudoku</h1>
+    <small class="text-xs dark:text-zinc-400">TM</small>
   </span>
   <div class="mb-4 p-6 text-sm flex flex-col contr-border rounded-md w-2/3">
     <ng-container *ngIf="dailyGame$ | async as dailyGame; else loading">
-      <span class="text-gray-600 dark:text-gray-50">{{ dailyGame.title }}</span>
-      <span class="text-gray-400 mb-3 dark:text-gray-50">{{ dailyGame.date | date : 'yyyy-MM-dd' }}</span>
+      <span class="text-gray-600 dark:text-zinc-400">{{ dailyGame.title }}</span>
+      <span class="text-gray-400 mb-3 dark:text-zinc-400">{{ dailyGame.date | date : 'yyyy-MM-dd' }}</span>
       <ng-container *ngIf="dailyGame.saved">
-        <hr class="h-px mb-3 bg-gray-300 border-0 dark:bg-gray-400" />
+        <hr class="h-px mb-3 bg-gray-300 border-0 dark:bg-zinc-700" />
         <div class="flex justify-between mb-2">
           <div class="flex items-center text-xs">
-            <span class="text-gray-600 dark:text-gray-50 uppercase">mistakes:</span>
+            <span class="text-gray-600 dark:text-zinc-400 uppercase">mistakes:</span>
             <span class="text-red-500 ease-in-out duration-100 ml-2" [class.warning]="dailyGame.errors >= maxMistakes">
               {{ dailyGame.errors }}/{{ maxMistakes }}
             </span>
           </div>
-          <div class="text-gray-600 dark:text-gray-50 uppercase flex items-center flex-row-reverse text-xs">
+          <div class="text-gray-600 dark:text-zinc-400 uppercase flex items-center flex-row-reverse text-xs">
             <span>{{ dailyGame.timeInSeconds | gameTime }}</span>
-            <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-gray-50"> timer </span>
+            <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-zinc-400"> timer </span>
           </div>
         </div>
       </ng-container>
@@ -42,9 +42,9 @@
     </ng-template>
   </div>
   <div class="flex flex-col">
-    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('easy')">easy</button>
-    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('medium')">medium</button>
-    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('hard')">hard</button>
-    <button class="h-12 w-32 m-2 contr-border rounded-md" (click)="onNewGameClick('expert')">expert</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('easy')">easy</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('medium')">medium</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('hard')">hard</button>
+    <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('expert')">expert</button>
   </div>
 </div>
