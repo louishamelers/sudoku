@@ -4,16 +4,67 @@ on:
     branches:
       - master
 jobs:
+  # Build job
   build:
+    # Specify runner + deployment step
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: All things angular
-        uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2 ## replace by latest version without it you will see Expected format {org}/{repo}[/path]@ref. Actual 'AhsanAyaz/angular-deploy-gh-pages-actions',Input string was not in a correct format.
+      # Checkout code
+      - uses: actions/checkout@v3
+      # Set up node
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
-          github_access_token: ${{ secrets.GH_CREDENTIALS }} # see the Configuration section for how you can create secrets
-          build_configuration: production # The build environment for the app. please look configurations in your angular.json
-          base_href: /sudoku/ # make sure this corresponds to https://<your_username>.github.io/<base_href>/
-          deploy_branch: gh-pages # The branch the action should deploy to.
-          angular_dist_build_folder: dist/sudoku-app # The folder where your project is supposed to be after running ng build by the action.
+          node-version: '18'
+          cache: 'npm'
+
+      # Install, build and run project
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build:ci
+      # - name: Test
+      #   run: npm run test:ci
+      - name: Upload GitHub Pages artifact
+        if: success()
+        uses: actions/upload-pages-artifact@v2.0.0
+        with:
+          path: dist/sudoku-app
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
+
+
+      # - name: Cache node modules
+      #   uses: actions/cache@v1.2.1
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with:
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
+      # - name: npm install and npm run CI commands
+      #   run: |
+      #     npm i
+      #     npm run test:ci
+      #     npm run build:ci
