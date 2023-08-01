@@ -3,17 +3,23 @@ on:
   push:
     branches:
       - master
+      - feature/ci
 jobs:
+  # Build job
   build:
-    runs-on: ubuntu-latest
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
 
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: All things angular
-        uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2 ## replace by latest version without it you will see Expected format {org}/{repo}[/path]@ref. Actual 'AhsanAyaz/angular-deploy-gh-pages-actions',Input string was not in a correct format.
-        with:
-          github_access_token: ${{ secrets.GH_CREDENTIALS }} # see the Configuration section for how you can create secrets
-          build_configuration: production # The build environment for the app. please look configurations in your angular.json
-          base_href: /sudoku/ # make sure this corresponds to https://<your_username>.github.io/<base_href>/
-          deploy_branch: gh-pages # The branch the action should deploy to.
-          angular_dist_build_folder: dist/sudoku-app # The folder where your project is supposed to be after running ng build by the action.
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
