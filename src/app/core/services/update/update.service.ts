@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UpdateService {
   constructor(private readonly updates: SwUpdate) {
     console.log('updates...');
