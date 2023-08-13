@@ -86,6 +86,18 @@ export class GameEffects {
       ),
     { dispatch: false },
   );
+  finishNow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(finishNow),
+      concatLatestFrom(() => this.store.select(selectGameBoard)),
+      switchMap(([, board]) => {
+        console.log('hai');
+        const finishedGameBoard = this.gameService.finishGameNow(board);
+        console.log(finishedGameBoard);
+        return of(setBoard({ board: finishedGameBoard }));
+      }),
+    ),
+  );
 
   constructor(
     private store: Store,

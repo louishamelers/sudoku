@@ -75,4 +75,12 @@ export class GameService {
     if (!key) return undefined;
     return this.gameSaveRepository.loadGame(key);
   }
+
+  // dev
+
+  finishGameNow(board: Board | null): Board | null {
+    if (!board) return null;
+
+    return board.map((row) => row.map((cell) => ({ ...cell, value: cell.answer })));
+  }
 }
