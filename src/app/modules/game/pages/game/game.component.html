@@ -23,11 +23,14 @@
     </div>
     <div><app-input></app-input></div>
   </div>
-  <button *ngIf="!production" class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12" (click)="finishNow()">
-    <span class="uppercase"> finish now </span>
-  </button>
-  <button class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12" routerLink="../">
-    <span class="material-icons text-s mr-2"> home </span>
-    <span class="uppercase"> home </span>
-  </button>
+  <div class="flex flex-col">
+    <button *ngIf="!production" class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12 mb-2" (click)="finishNow()">
+      <span class="material-icons text-s mr-2"> code </span>
+      <span class="uppercase"> finish now </span>
+    </button>
+    <button class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12" routerLink="../">
+      <span class="material-icons text-s mr-2"> home </span>
+      <span class="uppercase"> home </span>
+    </button>
+  </div>
 </div>
