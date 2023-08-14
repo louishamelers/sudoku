@@ -1,0 +1,24 @@
+<div class="mb-4 p-6 text-sm flex flex-col contr-border rounded-md w-full">
+  <div class="flex flex-row justify-between mb-3">
+    <div class="flex flex-col">
+      <span class="text-gray-600 dark:text-zinc-300">{{ game.title }}</span>
+      <span class="text-gray-400 dark:text-zinc-400">{{ game.date | date : 'yyyy-MM-dd' }}</span>
+    </div>
+  </div>
+  <ng-container>
+    <hr class="h-px mb-3 bg-gray-300 border-0 dark:bg-zinc-700" />
+    <div class="flex justify-between mb-3">
+      <div class="flex items-center text-xs">
+        <span class="text-gray-600 dark:text-zinc-300 uppercase">mistakes:</span>
+        <span class="text-red-500 ease-in-out duration-100 ml-2" [class.warning]="game.errors >= maxMistakes">
+          {{ game.errors }}/{{ maxMistakes }}
+        </span>
+      </div>
+      <div class="text-gray-600 dark:text-zinc-300 uppercase flex items-center flex-row-reverse text-xs">
+        <span>{{ game.timeInSeconds | gameTime }}</span>
+        <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-zinc-300"> timer </span>
+      </div>
+    </div>
+  </ng-container>
+  <button class="h-14 w-full rounded-md contr-blue-border" (click)="playGame(game)">Continue</button>
+</div>

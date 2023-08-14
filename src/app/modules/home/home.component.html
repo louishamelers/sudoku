@@ -3,49 +3,11 @@
     <h1 class="text-3xl dark:text-zinc-400">Sudoku</h1>
     <small class="text-xs dark:text-zinc-400">TM</small>
   </span>
-  <div class="mb-4 p-6 text-sm flex flex-col contr-border rounded-md w-2/3">
-    <ng-container *ngIf="dailyGame$ | async as dailyGame; else loading">
-      <div class="flex flex-row justify-between">
-        <div class="flex flex-col">
-          <span class="text-gray-600 dark:text-zinc-400">{{ dailyGame.title }}</span>
-          <span class="text-gray-400 mb-3 dark:text-zinc-400">{{ dailyGame.date | date : 'yyyy-MM-dd' }}</span>
-        </div>
-        <div *ngIf="dailyGame.complete" class="complete-badge"></div>
-      </div>
-      <ng-container *ngIf="dailyGame.saved">
-        <hr class="h-px mb-3 bg-gray-300 border-0 dark:bg-zinc-700" />
-        <div class="flex justify-between mb-2">
-          <div class="flex items-center text-xs">
-            <span class="text-gray-600 dark:text-zinc-400 uppercase">mistakes:</span>
-            <span class="text-red-500 ease-in-out duration-100 ml-2" [class.warning]="dailyGame.errors >= maxMistakes">
-              {{ dailyGame.errors }}/{{ maxMistakes }}
-            </span>
-          </div>
-          <div class="text-gray-600 dark:text-zinc-400 uppercase flex items-center flex-row-reverse text-xs">
-            <span>{{ dailyGame.timeInSeconds | gameTime }}</span>
-            <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-zinc-400"> timer </span>
-          </div>
-        </div>
-      </ng-container>
-      <button class="h-14 w-full rounded-md contr-blue-border" (click)="playGame(dailyGame)">{{ dailyGame.saved ? 'continue' : 'play' }}</button>
-    </ng-container>
-    <ng-template #loading>
-      <div class="flex items-center justify-center">
-        <div aria-label="Loading..." role="status">
-          <svg class="h-6 w-6 animate-spin" viewBox="3 3 18 18">
-            <path
-              class="fill-gray-50"
-              d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
-            ></path>
-            <path
-              class="fill-blue-600"
-              d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
-            ></path>
-          </svg>
-        </div>
-      </div>
-    </ng-template>
-  </div>
+  <ng-container *ngIf="dailyGame$ | async as dailyGame">
+    <app-game-complete class="w-2/3" *ngIf="dailyGame.board | gameComplete" [game]="dailyGame"></app-game-complete>
+    <app-game-continue class="w-2/3" *ngIf="dailyGame.timeInSeconds > 0 && !(dailyGame.board | gameComplete)" [game]="dailyGame"></app-game-continue>
+    <app-game-start class="w-2/3" *ngIf="!dailyGame.timeInSeconds" [game]="dailyGame"></app-game-start>
+  </ng-container>
   <div class="flex flex-col">
     <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('easy')">easy</button>
     <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('medium')">medium</button>
