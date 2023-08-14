@@ -30,9 +30,9 @@ export class GameEffects {
       ofType(setBoard),
       concatLatestFrom(() => [this.store.select(selectGameBoard)]),
 
-      switchMap((board) => {
-        if (!board && !this.gameService.isComplete(board)) return of();
-        return of(gameWon());
+      switchMap(([, board]) => {
+        if (board && this.gameService.isComplete(board)) return of(gameWon());
+        return of();
       }),
     ),
   );
