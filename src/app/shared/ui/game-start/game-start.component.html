@@ -1,0 +1,7 @@
+<div class="mb-4 p-6 text-sm flex flex-col border contr-border rounded-md w-full">
+  <div class="flex flex-col mb-3">
+    <span class="text-gray-600 dark:text-zinc-300">{{ game.title }}</span>
+    <span class="text-gray-400 dark:text-zinc-400">{{ game.date | date : 'yyyy-MM-dd' }}</span>
+  </div>
+  <button class="h-14 w-full rounded-md contr-blue-border" (click)="playGame(game)">Start</button>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, filter, interval, map, Subject, takeUntil, tap, withLatestFrom } from 'rxjs';
-import { addSecond } from 'src/app/core/state/game/game.actions';
+import { addSecond, finishNow } from 'src/app/core/state/game/game.actions';
 import { selectErrors, selectGameDate, selectGameDifficulty, selectGameTime, selectGameTitle } from 'src/app/core/state/game/game.selectors';
 import { environment } from 'src/environments/environment';
 
@@ -24,6 +24,7 @@ export class GameComponent implements OnDestroy, OnInit {
   destroy$ = new Subject<void>();
 
   maxMistakes = environment.maxErrors;
+  production = environment.production;
 
   constructor(private store: Store) {}
 
@@ -36,5 +37,9 @@ export class GameComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  finishNow(): void {
+    this.store.dispatch(finishNow());
   }
 }

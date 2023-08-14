@@ -27,12 +27,8 @@ export class HomeComponent implements OnInit {
       map((game) => {
         const key = game?.date?.getTime().toString();
         const savedGame = this.gameService.loadGame(key);
-        // const complete = savedGame?.board?.every((row) => row.every((column) => column.value === column.answer));
-        const complete = true;
 
-        if (savedGame) {
-          return { ...savedGame, saved: true, complete };
-        }
+        if (savedGame) return { ...savedGame, saved: true };
         return { ...game, errors: 0 };
       }),
     );

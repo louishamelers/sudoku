@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concat, filter, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
+import { concat, filter, map, of, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs';
 import { isNotNullOrUndefined } from 'src/app/shared/util/filter-typeguard';
 import { DailyService } from '../../services/daily/daily.service';
 import { GameService } from '../../services/game/game.service';
 import {
   clearValue,
   detectedIncorrectAnswer,
+  finishNow,
   gameWon,
   loadGame,
   loadNewGame,
@@ -21,19 +22,30 @@ import { selectActiveFieldCell, selectErrors, selectGameBoard, selectGameState }
 
 @Injectable()
 export class GameEffects {
-  setBoard$ = createEffect(() => this.store.select(selectGameState).pipe(tap((gameState) => this.gameService.saveGame(gameState))), {
+  onChange$ = createEffect(() => this.store.select(selectGameState).pipe(tap((gameState) => this.gameService.saveGame(gameState))), {
     dispatch: false,
   });
+  onSetBoard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setBoard),
+      concatLatestFrom(() => [this.store.select(selectGameBoard)]),
+
+      switchMap(([, board]) => {
+        if (board && this.gameService.isComplete(board)) return of(gameWon());
+        return of();
+      }),
+    ),
+  );
   setValue$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setValue),
       concatLatestFrom(() => [this.store.select(selectGameBoard), this.store.select(selectActiveFieldCell), this.store.select(selectErrors)]),
       switchMap(([{ value }, board, activeFieldCell, errors]) => {
+        // TODO: remove errors
         const updatedBoard = this.gameService.setCellValue(value, board, activeFieldCell);
         const wrongAnswer = activeFieldCell && activeFieldCell?.answer !== value && activeFieldCell?.value !== value && !activeFieldCell.readonly;
-        const complete = this.gameService.isComplete(updatedBoard);
 
-        return concat([setBoard({ board: updatedBoard }), ...(wrongAnswer ? [detectedIncorrectAnswer()] : []), ...(complete ? [gameWon()] : [])]);
+        return concat([setBoard({ board: updatedBoard }), ...(wrongAnswer ? [detectedIncorrectAnswer()] : [])]);
       }),
     ),
   );
@@ -73,6 +85,18 @@ export class GameEffects {
         tap(() => this.router.navigate(['/', 'game', 'winner'])),
       ),
     { dispatch: false },
+  );
+  finishNow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(finishNow),
+      concatLatestFrom(() => this.store.select(selectGameBoard)),
+      switchMap(([, board]) => {
+        console.log('hai');
+        const finishedGameBoard = this.gameService.finishGameNow(board);
+        console.log(finishedGameBoard);
+        return of(setBoard({ board: finishedGameBoard }));
+      }),
+    ),
   );
 
   constructor(
