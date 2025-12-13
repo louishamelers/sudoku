@@ -10,9 +10,10 @@ import { environment } from 'src/environments/environment';
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   dailyGame$?: Observable<any>;

@@ -6,9 +6,10 @@ import { selectActiveGameState } from 'src/app/core/state/game/game.selectors';
 import { Cell } from 'src/app/shared/models/board.model';
 
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
+    selector: 'app-board',
+    templateUrl: './board.component.html',
+    styleUrls: ['./board.component.scss'],
+    standalone: false
 })
 export class BoardComponent implements OnDestroy {
   destroy$ = new Subject<void>();

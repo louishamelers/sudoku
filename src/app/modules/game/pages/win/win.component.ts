@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-win',
-  templateUrl: './win.component.html',
-  styleUrls: ['./win.component.scss']
+    selector: 'app-win',
+    templateUrl: './win.component.html',
+    styleUrls: ['./win.component.scss'],
+    standalone: false
 })
 export class WinComponent implements OnInit {
 

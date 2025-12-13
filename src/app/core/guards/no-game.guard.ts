@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable, tap } from 'rxjs';
 import { selectActiveGameState } from '../state/game/game.selectors';
@@ -7,7 +7,7 @@ import { selectActiveGameState } from '../state/game/game.selectors';
 @Injectable({
   providedIn: 'root',
 })
-export class canActivateGameBoard implements CanActivate {
+export class canActivateGameBoard  {
   constructor(private store: Store, private router: Router) {}
   canActivate(
     _route: ActivatedRouteSnapshot,

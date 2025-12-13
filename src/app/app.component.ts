@@ -3,8 +3,9 @@ import { NetworkService } from './core/services/network/network.service';
 import { UpdateService } from './core/services/update/update.service';
 
 @Component({
-  selector: 'app-root',
-  template: '<router-outlet></router-outlet>',
+    selector: 'app-root',
+    template: '<router-outlet></router-outlet>',
+    standalone: false
 })
 export class AppComponent {
   title = 'sudoku-app';

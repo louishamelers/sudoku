@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store';
 import { loadGame } from 'src/app/core/state/game/game.actions';
 
 @Component({
-  selector: 'app-game-continue',
-  templateUrl: './game-continue.component.html',
-  styleUrls: ['./game-continue.component.scss'],
+    selector: 'app-game-continue',
+    templateUrl: './game-continue.component.html',
+    styleUrls: ['./game-continue.component.scss'],
+    standalone: false
 })
 export class GameContinueComponent {
   @Input() game!: Game;
