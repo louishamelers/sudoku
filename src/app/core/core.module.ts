@@ -27,10 +27,6 @@ import { UpdateService } from './services/update/update.service';
     CommonModule,
     BrowserModule,
 
-    // Firestore
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
-
     // NGRX - Instrumentation must be imported after importing StoreModule (config is optional)
     StoreModule.forRoot({ gameState: gameReducer }),
     EffectsModule.forRoot([GameEffects]),
@@ -40,7 +36,12 @@ import { UpdateService } from './services/update/update.service';
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
   ],
-  providers: [UpdateService],
+  providers: [
+    UpdateService,
+    // Firestore
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+  ],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
