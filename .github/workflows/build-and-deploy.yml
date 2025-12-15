@@ -2,69 +2,174 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master
-jobs:
-  # Build job
-  build:
-    # Specify runner + deployment step
-    runs-on: ubuntu-latest
+      - master  # Deploy master branch on every push
+  pull_request:
+    types: [opened, synchronize, reopened]  # Deploy on PR events
+  
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  pull-requests: write
 
+jobs:
+  # Build and deploy job
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # Ensure only one deployment runs at a time to avoid conflicts
+    concurrency:
+      group: pages-deployment
+      cancel-in-progress: false
+      
     steps:
       # Checkout code
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      
       # Set up node
       - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20.19'
           cache: 'npm'
 
-      # Install, build and run project
+      # Install dependencies
       - name: Install dependencies
         run: npm ci
+      
+      # Determine base href and deployment path based on event type
+      - name: Set deployment variables
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref_name }}" == "master" ]; then
+            # Master branch deployment
+            echo "base_href=/sudoku/" >> $GITHUB_OUTPUT
+            echo "target_dir=." >> $GITHUB_OUTPUT
+            echo "is_master=true" >> $GITHUB_OUTPUT
+            echo "deployment_url=https://louishamelers.github.io/sudoku/" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            # Pull request deployment
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+            echo "base_href=/sudoku/pr-$PR_NUMBER/" >> $GITHUB_OUTPUT
+            echo "target_dir=pr-$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "is_master=false" >> $GITHUB_OUTPUT
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "deployment_url=https://louishamelers.github.io/sudoku/pr-$PR_NUMBER/" >> $GITHUB_OUTPUT
+          else
+            # Unsupported event or branch
+            echo "Error: Unsupported event type '${{ github.event_name }}' or branch '${{ github.ref_name }}'"
+            exit 1
+          fi
+      
+      # Build with appropriate base href
       - name: Build
-        run: npm run build:ci
-      # - name: Test
-      #   run: npm run test:ci
-      - name: Upload GitHub Pages artifact
-        if: success()
-        uses: actions/upload-pages-artifact@v2.0.0
+        run: npx ng build --configuration=production --base-href="${{ steps.vars.outputs.base_href }}"
+      
+      # Checkout gh-pages branch to preserve existing content from other branches
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
         with:
-          path: dist/sudoku-app
-  deploy:
-    # Add a dependency to the build job
-    needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write # to deploy to Pages
-      id-token: write # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
-    runs-on: ubuntu-latest
-    steps:
+          ref: gh-pages
+          path: gh-pages-content
+        continue-on-error: true
+          
+      # Prepare deployment: merge new build with existing gh-pages content
+      - name: Prepare deployment directory
+        run: |
+          # Create deployment directory
+          mkdir -p deployment
+          
+          # Copy existing gh-pages content if it exists (to preserve other deployments)
+          if [ -d "gh-pages-content" ] && [ "$(ls -A gh-pages-content 2>/dev/null)" ]; then
+            echo "Copying existing gh-pages content..."
+            # Use rsync to copy including hidden files, excluding .git
+            rsync -av --exclude='.git' gh-pages-content/ deployment/ || cp -r gh-pages-content/. deployment/ 2>/dev/null || true
+          else
+            echo "No existing gh-pages content found, creating fresh deployment"
+          fi
+          
+          # For master branch, deploy to root of /sudoku/
+          if [ "${{ steps.vars.outputs.is_master }}" == "true" ]; then
+            echo "Deploying master branch to /sudoku/"
+            mkdir -p deployment/sudoku
+            cp -r dist/sudoku-app/* deployment/sudoku/
+            
+            # Create root index.html that redirects to /sudoku/
+            cat > deployment/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Sudoku App - Redirecting...</title>
+            <meta http-equiv="refresh" content="0; url=/sudoku/">
+            <script>window.location.href = '/sudoku/';</script>
+          </head>
+          <body>
+            <p>Redirecting to <a href="/sudoku/">Sudoku App</a>...</p>
+          </body>
+          </html>
+          EOF
+          else
+            # For pull requests, deploy to /sudoku/pr-<number>/
+            echo "Deploying PR #${{ steps.vars.outputs.pr_number }} to /sudoku/pr-${{ steps.vars.outputs.pr_number }}/"
+            mkdir -p "deployment/sudoku/pr-${{ steps.vars.outputs.pr_number }}"
+            cp -r dist/sudoku-app/* "deployment/sudoku/pr-${{ steps.vars.outputs.pr_number }}/"
+          fi
+          
+          # List deployment structure for debugging
+          echo "Deployment directory structure:"
+          ls -la deployment/ || true
+          ls -la deployment/sudoku/ || true
+      
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
-
-
-      # - name: Cache node modules
-      #   uses: actions/cache@v1.2.1
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-      # - name: npm install and npm run CI commands
-      #   run: |
-      #     npm i
-      #     npm run test:ci
-      #     npm run build:ci
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deployment
+          # Keep files to preserve other deployments
+          keep_files: true
+          commit_message: 'Deploy ${{ github.event_name == ''pull_request'' && format(''PR #{0}'', github.event.pull_request.number) || ''master'' }} to GitHub Pages'
+      
+      # Comment on PR with deployment URL
+      - name: Comment PR with deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const deploymentUrl = '${{ steps.vars.outputs.deployment_url }}';
+            
+            // Check if we already commented
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Preview deployment')
+            );
+            
+            const commentBody = '### 🚀 Preview deployment ready!\n\n' +
+              'Your changes have been deployed to: ' + deploymentUrl + '\n\n' +
+              'This preview will be updated automatically when you push new commits to this PR.';
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: commentBody
+              });
+            }

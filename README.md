@@ -3,6 +3,17 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.2.
 Updated to Angular 21.0.5.
 
+## Deployment
+
+The app is automatically deployed to GitHub Pages via GitHub Actions:
+
+- **Master branch**: Deployed to [https://louishamelers.github.io/sudoku/](https://louishamelers.github.io/sudoku/) on every push
+- **Pull Requests**: Deployed to `https://louishamelers.github.io/sudoku/pr-<number>/` when a PR is opened or updated
+  - Example: PR #42 will be deployed to `https://louishamelers.github.io/sudoku/pr-42/`
+  - A comment with the preview URL will be automatically added to the PR
+
+The deployment workflow preserves all PR preview deployments and the master deployment.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
