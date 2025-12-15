@@ -2,7 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Board } from '../models/board.model';
 import { GameData } from '../models/game.model';
 
-@Pipe({ name: 'gameComplete' })
+@Pipe({
+    name: 'gameComplete',
+    standalone: false
+})
 export class GameCompletePipe implements PipeTransform {
   transform(board: Board | null): boolean {
     return board ? board.every((row) => row.every((column) => column.value === column.answer)) : false;

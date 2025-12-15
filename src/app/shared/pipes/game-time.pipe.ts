@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'gameTime' })
+@Pipe({
+    name: 'gameTime',
+    standalone: false
+})
 export class GameTimePipe implements PipeTransform {
   transform(value: number): string {
     const minutes = String(~~(value / 60));

@@ -2,32 +2,38 @@
   <div>
     <div class="mb-4 flex justify-between">
       <div class="flex flex-col">
-        <ng-container *ngIf="gameTitle$ | async as gameTitle">
+        @if (gameTitle$ | async; as gameTitle) {
           <span class="capitalize text-gray-600 dark:text-zinc-400 text-2xl">{{ gameTitle }}</span>
-        </ng-container>
-        <ng-container *ngIf="gameDate$ | async as gameDate">
+        }
+        @if (gameDate$ | async; as gameDate) {
           <span class="text-gray-400 dark:text-zinc-500 text-sm">{{ gameDate | date : 'yyyy-MM-dd' }}</span>
-        </ng-container>
+        }
       </div>
-      <div *ngIf="mistakes$ | async as mistakes" class="flex items-end">
-        <span class="text-gray-600 dark:text-zinc-500 uppercase text-xs">mistakes:</span>
-        <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes">
-          {{ mistakes.value }}/{{ maxMistakes }}
-        </span>
-      </div>
+      @if (mistakes$ | async; as mistakes) {
+        <div class="flex items-end">
+          <span class="text-gray-600 dark:text-zinc-500 uppercase text-xs">mistakes:</span>
+          <span class="text-red-500 text-xs ease-in-out duration-100 ml-2" [class.warning]="mistakes.value >= maxMistakes">
+            {{ mistakes.value }}/{{ maxMistakes }}
+          </span>
+        </div>
+      }
     </div>
     <div class="mb-2"><app-board></app-board></div>
-    <div *ngIf="time$ | async as time" class="text-gray-600 dark:text-zinc-400 uppercase text-xs mb-7 flex flex-row-reverse">
-      <span>{{ time.value | gameTime }}</span>
-      <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-zinc-400"> timer </span>
-    </div>
+    @if (time$ | async; as time) {
+      <div class="text-gray-600 dark:text-zinc-400 uppercase text-xs mb-7 flex flex-row-reverse">
+        <span>{{ time.value | gameTime }}</span>
+        <span class="material-icons-outlined text-xs mr-1 text-gray-600 dark:text-zinc-400"> timer </span>
+      </div>
+    }
     <div><app-input></app-input></div>
   </div>
   <div class="flex flex-col">
-    <button *ngIf="!production" class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12 mb-2" (click)="finishNow()">
-      <span class="material-icons text-s mr-2"> code </span>
-      <span class="uppercase"> finish now </span>
-    </button>
+    @if (!production) {
+      <button class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12 mb-2" (click)="finishNow()">
+        <span class="material-icons text-s mr-2"> code </span>
+        <span class="uppercase"> finish now </span>
+      </button>
+    }
     <button class="rounded-md contr-border dark:text-zinc-400 flex items-center justify-center h-12" routerLink="../">
       <span class="material-icons text-s mr-2"> home </span>
       <span class="uppercase"> home </span>

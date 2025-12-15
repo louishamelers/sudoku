@@ -3,11 +3,17 @@
     <h1 class="text-3xl dark:text-zinc-400">Sudoku</h1>
     <small class="text-xs dark:text-zinc-400">TM</small>
   </span>
-  <ng-container *ngIf="dailyGame$ | async as dailyGame">
-    <app-game-complete class="w-2/3" *ngIf="dailyGame.board | gameComplete" [game]="dailyGame"></app-game-complete>
-    <app-game-continue class="w-2/3" *ngIf="dailyGame.timeInSeconds > 0 && !(dailyGame.board | gameComplete)" [game]="dailyGame"></app-game-continue>
-    <app-game-start class="w-2/3" *ngIf="!dailyGame.timeInSeconds" [game]="dailyGame"></app-game-start>
-  </ng-container>
+  @if (dailyGame$ | async; as dailyGame) {
+    @if (dailyGame.board | gameComplete) {
+      <app-game-complete class="w-2/3" [game]="dailyGame"></app-game-complete>
+    }
+    @if (dailyGame.timeInSeconds > 0 && !(dailyGame.board | gameComplete)) {
+      <app-game-continue class="w-2/3" [game]="dailyGame"></app-game-continue>
+    }
+    @if (!dailyGame.timeInSeconds) {
+      <app-game-start class="w-2/3" [game]="dailyGame"></app-game-start>
+    }
+  }
   <div class="flex flex-col">
     <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('easy')">easy</button>
     <button class="h-12 w-32 m-2 contr-border rounded-md dark:text-zinc-400" (click)="onNewGameClick('medium')">medium</button>

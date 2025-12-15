@@ -1,28 +1,29 @@
-<ng-container *ngIf="gameState$ | async as gameState">
-  <ng-container *ngFor="let row of gameState.board; index as rowIndex">
-    <div
-      class="cell"
-      *ngFor="let field of row; index as colIndex"
-      [class.top]="rowIndex % 3 === 0"
-      [class.bottom]="rowIndex % 3 === 2"
-      [class.left]="colIndex % 3 === 0"
-      [class.right]="colIndex % 3 === 2"
-      [class.rounded-tl-md]="colIndex === 0 && rowIndex === 0"
-      [class.rounded-tr-md]="colIndex === 8 && rowIndex === 0"
-      [class.rounded-br-md]="colIndex === 8 && rowIndex === 8"
-      [class.rounded-bl-md]="colIndex === 0 && rowIndex === 8"
+@if (gameState$ | async; as gameState) {
+  @for (row of gameState.board; track row; let rowIndex = $index) {
+    @for (field of row; track field; let colIndex = $index) {
+      <div
+        class="cell"
+        [class.top]="rowIndex % 3 === 0"
+        [class.bottom]="rowIndex % 3 === 2"
+        [class.left]="colIndex % 3 === 0"
+        [class.right]="colIndex % 3 === 2"
+        [class.rounded-tl-md]="colIndex === 0 && rowIndex === 0"
+        [class.rounded-tr-md]="colIndex === 8 && rowIndex === 0"
+        [class.rounded-br-md]="colIndex === 8 && rowIndex === 8"
+        [class.rounded-bl-md]="colIndex === 0 && rowIndex === 8"
       [class.highlight]="
         ((gameState.activeFieldCell?.row | blockIndex) === (rowIndex | blockIndex) &&
           (gameState.activeFieldCell?.col | blockIndex) === (colIndex | blockIndex)) ||
         rowIndex === gameState.activeFieldCell?.row ||
         colIndex === gameState.activeFieldCell?.col
       "
-      [class.highlight-wrong]="field.value !== field.answer && field.value !== undefined"
-      [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"
-      [class.active]="gameState.activeFieldCell?.col === colIndex && gameState.activeFieldCell?.row === rowIndex"
-      (click)="onFieldClick({ row: rowIndex, col: colIndex })"
-    >
-      <div class="value">{{ field.value }}</div>
-    </div>
-  </ng-container>
-</ng-container>
+        [class.highlight-wrong]="field.value !== field.answer && field.value !== undefined"
+        [class.highlight-same]="gameState.activeFieldCell?.value && gameState.activeFieldCell?.value === field?.value"
+        [class.active]="gameState.activeFieldCell?.col === colIndex && gameState.activeFieldCell?.row === rowIndex"
+        (click)="onFieldClick({ row: rowIndex, col: colIndex })"
+        >
+        <div class="value">{{ field.value }}</div>
+      </div>
+    }
+  }
+}

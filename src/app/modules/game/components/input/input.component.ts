@@ -5,9 +5,10 @@ import { clearValue, setValue } from 'src/app/core/state/game/game.actions';
 import { selectUsedNumbers } from 'src/app/core/state/game/game.selectors';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+    selector: 'app-input',
+    templateUrl: './input.component.html',
+    styleUrls: ['./input.component.scss'],
+    standalone: false
 })
 export class InputComponent implements OnDestroy {
   destroy$ = new Subject<void>();

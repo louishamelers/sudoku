@@ -6,9 +6,10 @@ import { selectErrors, selectGameDate, selectGameDifficulty, selectGameTime, sel
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss'],
+    selector: 'app-game',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.scss'],
+    standalone: false
 })
 export class GameComponent implements OnDestroy, OnInit {
   gameTitle$ = combineLatest([this.store.select(selectGameDifficulty), this.store.select(selectGameTitle)]).pipe(

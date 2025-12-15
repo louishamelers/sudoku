@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 import { loadGame } from 'src/app/core/state/game/game.actions';
 
 @Component({
-  selector: 'app-game-start',
-  templateUrl: './game-start.component.html',
-  styleUrls: ['./game-start.component.scss'],
+    selector: 'app-game-start',
+    templateUrl: './game-start.component.html',
+    styleUrls: ['./game-start.component.scss'],
+    standalone: false
 })
 export class GameStartComponent {
   @Input() game!: Game;
