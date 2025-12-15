@@ -38,14 +38,14 @@ jobs:
       - name: Set deployment variables
         id: vars
         run: |
-          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
+          if [ "${{ github.ref_name }}" == "master" ]; then
             echo "base_href=/sudoku/" >> $GITHUB_OUTPUT
             echo "target_dir=." >> $GITHUB_OUTPUT
             echo "is_master=true" >> $GITHUB_OUTPUT
           else
             BRANCH_NAME="${{ github.ref_name }}"
-            # Sanitize branch name for URL (replace / with -)
-            SANITIZED_BRANCH=$(echo "$BRANCH_NAME" | sed 's/\//-/g')
+            # Sanitize branch name for URL (replace / and other invalid chars with -)
+            SANITIZED_BRANCH=$(echo "$BRANCH_NAME" | sed 's/[^a-zA-Z0-9._-]/-/g')
             echo "base_href=/sudoku/$SANITIZED_BRANCH/" >> $GITHUB_OUTPUT
             echo "target_dir=$SANITIZED_BRANCH" >> $GITHUB_OUTPUT
             echo "is_master=false" >> $GITHUB_OUTPUT
@@ -73,8 +73,8 @@ jobs:
           # Copy existing gh-pages content if it exists (to preserve other branch deployments)
           if [ -d "gh-pages-content" ] && [ "$(ls -A gh-pages-content 2>/dev/null)" ]; then
             echo "Copying existing gh-pages content..."
-            # Use rsync to copy, excluding .git
-            rsync -av --exclude='.git' gh-pages-content/ deployment/ || cp -r gh-pages-content/* deployment/ 2>/dev/null || true
+            # Use rsync to copy including hidden files, excluding .git
+            rsync -av --exclude='.git' gh-pages-content/ deployment/ || cp -r gh-pages-content/. deployment/ 2>/dev/null || true
           else
             echo "No existing gh-pages content found, creating fresh deployment"
           fi
