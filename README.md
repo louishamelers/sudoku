@@ -3,6 +3,17 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.2.
 Updated to Angular 21.0.5.
 
+## Deployment
+
+The app is automatically deployed to GitHub Pages via GitHub Actions:
+
+- **Master branch**: Deployed to [https://louishamelers.github.io/sudoku/](https://louishamelers.github.io/sudoku/)
+- **Feature branches**: Deployed to `https://louishamelers.github.io/sudoku/<branch-name>/`
+  - Example: A branch named `feature-1` will be deployed to `https://louishamelers.github.io/sudoku/feature-1/`
+  - Branch names with slashes (e.g., `feature/new-ui`) are sanitized to use hyphens (e.g., `feature-new-ui`)
+
+The deployment workflow runs on every push to any branch and preserves deployments from other branches.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
