@@ -2,55 +2,125 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master
-jobs:
-  # Build job
-  build:
-    # Specify runner + deployment step
-    runs-on: ubuntu-latest
+      - '**'  # Trigger on all branches
+  
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
+jobs:
+  # Build and deploy job
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # Ensure only one deployment runs at a time to avoid conflicts
+    concurrency:
+      group: pages-deployment
+      cancel-in-progress: false
+      
     steps:
       # Checkout code
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      
       # Set up node
       - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
-      # Install, build and run project
+      # Install dependencies
       - name: Install dependencies
         run: npm ci
+      
+      # Determine base href and deployment path based on branch
+      - name: Set deployment variables
+        id: vars
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
+            echo "base_href=/sudoku/" >> $GITHUB_OUTPUT
+            echo "target_dir=." >> $GITHUB_OUTPUT
+            echo "is_master=true" >> $GITHUB_OUTPUT
+          else
+            BRANCH_NAME="${{ github.ref_name }}"
+            # Sanitize branch name for URL (replace / with -)
+            SANITIZED_BRANCH=$(echo "$BRANCH_NAME" | sed 's/\//-/g')
+            echo "base_href=/sudoku/$SANITIZED_BRANCH/" >> $GITHUB_OUTPUT
+            echo "target_dir=$SANITIZED_BRANCH" >> $GITHUB_OUTPUT
+            echo "is_master=false" >> $GITHUB_OUTPUT
+            echo "sanitized_branch=$SANITIZED_BRANCH" >> $GITHUB_OUTPUT
+          fi
+      
+      # Build with appropriate base href
       - name: Build
-        run: npm run build:ci
-      # - name: Test
-      #   run: npm run test:ci
-      - name: Upload GitHub Pages artifact
-        if: success()
-        uses: actions/upload-pages-artifact@v2.0.0
+        run: npx ng build --configuration=production --base-href="${{ steps.vars.outputs.base_href }}"
+      
+      # Checkout gh-pages branch to preserve existing content from other branches
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
         with:
-          path: dist/sudoku-app
-  deploy:
-    # Add a dependency to the build job
-    needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write # to deploy to Pages
-      id-token: write # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
-    runs-on: ubuntu-latest
-    steps:
+          ref: gh-pages
+          path: gh-pages-content
+        continue-on-error: true
+          
+      # Prepare deployment: merge new build with existing gh-pages content
+      - name: Prepare deployment directory
+        run: |
+          # Create deployment directory
+          mkdir -p deployment
+          
+          # Copy existing gh-pages content if it exists (to preserve other branch deployments)
+          if [ -d "gh-pages-content" ] && [ "$(ls -A gh-pages-content 2>/dev/null)" ]; then
+            echo "Copying existing gh-pages content..."
+            # Use rsync to copy, excluding .git
+            rsync -av --exclude='.git' gh-pages-content/ deployment/ || cp -r gh-pages-content/* deployment/ 2>/dev/null || true
+          else
+            echo "No existing gh-pages content found, creating fresh deployment"
+          fi
+          
+          # For master branch, deploy to root of /sudoku/
+          if [ "${{ steps.vars.outputs.is_master }}" == "true" ]; then
+            echo "Deploying master branch to /sudoku/"
+            mkdir -p deployment/sudoku
+            cp -r dist/sudoku-app/* deployment/sudoku/
+            
+            # Create root index.html that redirects to /sudoku/
+            cat > deployment/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Sudoku App - Redirecting...</title>
+            <meta http-equiv="refresh" content="0; url=/sudoku/">
+            <script>window.location.href = '/sudoku/';</script>
+          </head>
+          <body>
+            <p>Redirecting to <a href="/sudoku/">Sudoku App</a>...</p>
+          </body>
+          </html>
+          EOF
+          else
+            # For feature branches, deploy to /sudoku/<branch-name>/
+            echo "Deploying branch ${{ github.ref_name }} to /sudoku/${{ steps.vars.outputs.sanitized_branch }}/"
+            mkdir -p "deployment/sudoku/${{ steps.vars.outputs.sanitized_branch }}"
+            cp -r dist/sudoku-app/* "deployment/sudoku/${{ steps.vars.outputs.sanitized_branch }}/"
+          fi
+          
+          # List deployment structure for debugging
+          echo "Deployment directory structure:"
+          ls -la deployment/ || true
+          ls -la deployment/sudoku/ || true
+      
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deployment
+          # Keep files to preserve other branch deployments
+          keep_files: true
+          commit_message: 'Deploy ${{ github.ref_name }} to GitHub Pages'
 
 
       # - name: Cache node modules
