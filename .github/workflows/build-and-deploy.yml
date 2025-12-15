@@ -55,6 +55,10 @@ jobs:
             echo "is_master=false" >> $GITHUB_OUTPUT
             echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
             echo "deployment_url=https://louishamelers.github.io/sudoku/pr-$PR_NUMBER/" >> $GITHUB_OUTPUT
+          else
+            # Unsupported event or branch
+            echo "Error: Unsupported event type '${{ github.event_name }}' or branch '${{ github.ref_name }}'"
+            exit 1
           fi
       
       # Build with appropriate base href
@@ -169,20 +173,3 @@ jobs:
                 body: commentBody
               });
             }
-
-
-      # - name: Cache node modules
-      #   uses: actions/cache@v1.2.1
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-      # - name: npm install and npm run CI commands
-      #   run: |
-      #     npm i
-      #     npm run test:ci
-      #     npm run build:ci
