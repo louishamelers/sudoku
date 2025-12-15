@@ -7,12 +7,12 @@ Updated to Angular 21.0.5.
 
 The app is automatically deployed to GitHub Pages via GitHub Actions:
 
-- **Master branch**: Deployed to [https://louishamelers.github.io/sudoku/](https://louishamelers.github.io/sudoku/)
-- **Feature branches**: Deployed to `https://louishamelers.github.io/sudoku/<branch-name>/`
-  - Example: A branch named `feature-1` will be deployed to `https://louishamelers.github.io/sudoku/feature-1/`
-  - Branch names with slashes (e.g., `feature/new-ui`) are sanitized to use hyphens (e.g., `feature-new-ui`)
+- **Master branch**: Deployed to [https://louishamelers.github.io/sudoku/](https://louishamelers.github.io/sudoku/) on every push
+- **Pull Requests**: Deployed to `https://louishamelers.github.io/sudoku/pr-<number>/` when a PR is opened or updated
+  - Example: PR #42 will be deployed to `https://louishamelers.github.io/sudoku/pr-42/`
+  - A comment with the preview URL will be automatically added to the PR
 
-The deployment workflow runs on every push to any branch and preserves deployments from other branches.
+The deployment workflow preserves all PR preview deployments and the master deployment.
 
 ## Development server
 

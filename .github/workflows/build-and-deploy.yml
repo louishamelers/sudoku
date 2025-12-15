@@ -2,12 +2,15 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - '**'  # Trigger on all branches
+      - master  # Deploy master branch on every push
+  pull_request:
+    types: [opened, synchronize, reopened]  # Deploy on PR events
   
 permissions:
   contents: write
   pages: write
   id-token: write
+  pull-requests: write
 
 jobs:
   # Build and deploy job
@@ -34,22 +37,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      # Determine base href and deployment path based on branch
+      # Determine base href and deployment path based on event type
       - name: Set deployment variables
         id: vars
         run: |
-          if [ "${{ github.ref_name }}" == "master" ]; then
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref_name }}" == "master" ]; then
+            # Master branch deployment
             echo "base_href=/sudoku/" >> $GITHUB_OUTPUT
             echo "target_dir=." >> $GITHUB_OUTPUT
             echo "is_master=true" >> $GITHUB_OUTPUT
-          else
-            BRANCH_NAME="${{ github.ref_name }}"
-            # Sanitize branch name for URL (replace / and other invalid chars with -)
-            SANITIZED_BRANCH=$(echo "$BRANCH_NAME" | sed 's/[^a-zA-Z0-9._-]/-/g')
-            echo "base_href=/sudoku/$SANITIZED_BRANCH/" >> $GITHUB_OUTPUT
-            echo "target_dir=$SANITIZED_BRANCH" >> $GITHUB_OUTPUT
+            echo "deployment_url=https://louishamelers.github.io/sudoku/" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            # Pull request deployment
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+            echo "base_href=/sudoku/pr-$PR_NUMBER/" >> $GITHUB_OUTPUT
+            echo "target_dir=pr-$PR_NUMBER" >> $GITHUB_OUTPUT
             echo "is_master=false" >> $GITHUB_OUTPUT
-            echo "sanitized_branch=$SANITIZED_BRANCH" >> $GITHUB_OUTPUT
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "deployment_url=https://louishamelers.github.io/sudoku/pr-$PR_NUMBER/" >> $GITHUB_OUTPUT
           fi
       
       # Build with appropriate base href
@@ -70,7 +75,7 @@ jobs:
           # Create deployment directory
           mkdir -p deployment
           
-          # Copy existing gh-pages content if it exists (to preserve other branch deployments)
+          # Copy existing gh-pages content if it exists (to preserve other deployments)
           if [ -d "gh-pages-content" ] && [ "$(ls -A gh-pages-content 2>/dev/null)" ]; then
             echo "Copying existing gh-pages content..."
             # Use rsync to copy including hidden files, excluding .git
@@ -101,10 +106,10 @@ jobs:
           </html>
           EOF
           else
-            # For feature branches, deploy to /sudoku/<branch-name>/
-            echo "Deploying branch ${{ github.ref_name }} to /sudoku/${{ steps.vars.outputs.sanitized_branch }}/"
-            mkdir -p "deployment/sudoku/${{ steps.vars.outputs.sanitized_branch }}"
-            cp -r dist/sudoku-app/* "deployment/sudoku/${{ steps.vars.outputs.sanitized_branch }}/"
+            # For pull requests, deploy to /sudoku/pr-<number>/
+            echo "Deploying PR #${{ steps.vars.outputs.pr_number }} to /sudoku/pr-${{ steps.vars.outputs.pr_number }}/"
+            mkdir -p "deployment/sudoku/pr-${{ steps.vars.outputs.pr_number }}"
+            cp -r dist/sudoku-app/* "deployment/sudoku/pr-${{ steps.vars.outputs.pr_number }}/"
           fi
           
           # List deployment structure for debugging
@@ -118,9 +123,52 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./deployment
-          # Keep files to preserve other branch deployments
+          # Keep files to preserve other deployments
           keep_files: true
-          commit_message: 'Deploy ${{ github.ref_name }} to GitHub Pages'
+          commit_message: 'Deploy ${{ github.event_name == ''pull_request'' && format(''PR #{0}'', github.event.pull_request.number) || ''master'' }} to GitHub Pages'
+      
+      # Comment on PR with deployment URL
+      - name: Comment PR with deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const deploymentUrl = '${{ steps.vars.outputs.deployment_url }}';
+            
+            // Check if we already commented
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Preview deployment')
+            );
+            
+            const commentBody = '### 🚀 Preview deployment ready!\n\n' +
+              'Your changes have been deployed to: ' + deploymentUrl + '\n\n' +
+              'This preview will be updated automatically when you push new commits to this PR.';
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: commentBody
+              });
+            }
 
 
       # - name: Cache node modules
